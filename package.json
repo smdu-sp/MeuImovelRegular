@@ -1,15 +1,21 @@
 {
-  "name": "myapp",
+  "name": "meu-imovel-regular",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "payload": "payload"
   },
   "dependencies": {
+    "@payloadcms/db-sqlite": "3.88.0",
+    "@payloadcms/next": "3.88.0",
+    "graphql": "16.14.2",
     "next": "16.3.3",
+    "payload": "3.88.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

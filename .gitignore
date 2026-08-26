@@ -23,6 +23,12 @@
 # misc
 .DS_Store
 *.pem
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # debug
 npm-debug.log*
