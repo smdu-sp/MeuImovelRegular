@@ -1,6 +1,7 @@
 {
   "name": "meu-imovel-regular",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@payloadcms/db-sqlite": "3.88.0",
     "@payloadcms/next": "3.88.0",
+    "@payloadcms/richtext-lexical": "3.88.0",
     "graphql": "16.14.2",
     "next": "16.3.3",
     "payload": "3.88.0",

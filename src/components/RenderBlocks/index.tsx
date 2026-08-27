@@ -1,0 +1,34 @@
+import type { Page } from "../../payload-types";
+import { CardsBlock } from "../../blocks/Cards/Component";
+import { CTABlock } from "../../blocks/CTA/Component";
+import { HeroBlock } from "../../blocks/Hero/Component";
+import { ImageTextBlock } from "../../blocks/ImageText/Component";
+import { RichTextBlock } from "../../blocks/RichText/Component";
+
+type PageBlock = NonNullable<Page["layout"]>[number];
+
+export function RenderBlocks({ blocks }: { blocks?: Page["layout"] | null }) {
+  if (!blocks?.length) return null;
+
+  return blocks.map((block, index) => {
+    const key = block.id || `${block.blockType}-${index}`;
+
+    switch (block.blockType) {
+      case "hero":
+        return <HeroBlock {...block} key={key} />;
+      case "richText":
+        return <RichTextBlock {...block} key={key} />;
+      case "imageText":
+        return <ImageTextBlock {...block} key={key} />;
+      case "cards":
+        return <CardsBlock {...block} key={key} />;
+      case "cta":
+        return <CTABlock {...block} key={key} />;
+      default:
+        return null;
+    }
+  });
+}
+
+export type { PageBlock };
+
