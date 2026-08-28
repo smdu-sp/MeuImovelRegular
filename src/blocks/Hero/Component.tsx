@@ -14,26 +14,32 @@ export function HeroBlock({
   const withImage = variant === "image";
 
   return (
-    <section className="bg-surface-strong text-surface-strong-foreground">
+    <section className="bg-secondary text-secondary-foreground">
       <div
-        className={`mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 sm:px-10 lg:py-24 ${withImage ? "items-center lg:grid-cols-2" : ""}`}
+        className={`mx-auto grid w-full max-w-container-lg gap-10 px-container py-16 sm:px-container-wide lg:py-24 ${withImage ? "items-center lg:grid-cols-2" : ""}`}
       >
-        <div className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+        <div
+          className={
+            centered
+              ? "mx-auto max-w-container-sm text-center"
+              : "max-w-container-sm"
+          }
+        >
           {eyebrow ? (
-            <p className="text-sm font-semibold uppercase text-accent-soft">
+            <p className="text-sm font-semibold uppercase text-accent">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="mt-3 text-4xl font-semibold leading-tight sm:text-5xl">
+          <h1 className="mt-3 font-heading text-display-md font-semibold leading-tight sm:text-display-lg">
             {title}
           </h1>
           {description ? (
-            <p className="mt-6 text-lg leading-8 text-surface-strong-foreground">
+            <p className="mt-6 text-lg leading-relaxed text-secondary-foreground">
               {description}
             </p>
           ) : null}
           <BlockLink
-            className="mt-8 inline-flex rounded-md bg-brand px-5 py-3 font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
+            className="mt-8 inline-flex rounded-md bg-primary px-5 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
             link={cta}
           />
         </div>

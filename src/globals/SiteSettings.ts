@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { validateOptionalHexColor } from "../lib/theme/colors.ts";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
@@ -38,6 +39,34 @@ export const SiteSettings: GlobalConfig = {
           type: "text",
           label: "URL",
           required: true,
+        },
+      ],
+    },
+    {
+      name: "branding",
+      type: "group",
+      label: "Branding",
+      fields: [
+        {
+          name: "primaryColor",
+          type: "text",
+          label: "Cor primaria",
+          defaultValue: "#007a73",
+          validate: validateOptionalHexColor,
+        },
+        {
+          name: "secondaryColor",
+          type: "text",
+          label: "Cor secundaria",
+          defaultValue: "#103b3f",
+          validate: validateOptionalHexColor,
+        },
+        {
+          name: "accentColor",
+          type: "text",
+          label: "Cor de destaque",
+          defaultValue: "#fff4cc",
+          validate: validateOptionalHexColor,
         },
       ],
     },

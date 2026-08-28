@@ -11,15 +11,20 @@ export function ImageTextBlock({
   title,
 }: ImageTextBlockProps) {
   return (
-    <section className="bg-page px-6 py-12 sm:px-10">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
+    <section className="bg-background px-container py-12 sm:px-container-wide">
+      <div className="mx-auto grid max-w-container-lg items-center gap-10 lg:grid-cols-2">
         <MediaImage
           className={`h-auto w-full rounded-xl object-cover ${imagePosition === "right" ? "lg:order-2" : ""}`}
           media={image}
         />
         <div>
-          <h2 className="text-3xl font-semibold text-heading">{title}</h2>
-          <RichText className="cms-rich-text mt-5 leading-8" data={content} />
+          <h2 className="font-heading text-heading-lg font-semibold text-heading">
+            {title}
+          </h2>
+          <RichText
+            className="cms-rich-text mt-5 leading-relaxed"
+            data={content}
+          />
           <BlockLink
             className="mt-6 inline-flex font-semibold text-link underline decoration-2 underline-offset-4"
             link={cta}

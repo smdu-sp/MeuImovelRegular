@@ -1,24 +1,21 @@
 @import "tailwindcss";
+@import "../../styles/tokens.css";
 
 :root {
-  --color-page: #f7f9f7;
-  --color-page-foreground: #24302f;
-  --color-surface: #ffffff;
-  --color-surface-muted: #eef4f1;
-  --color-surface-strong: #103b3f;
-  --color-surface-strong-foreground: #ffffff;
-  --color-border: #cad8d2;
-  --color-heading: #142724;
-  --color-text: #2f3d3a;
-  --color-text-muted: #5e7069;
-  --color-brand: #007a73;
-  --color-brand-hover: #00645f;
-  --color-brand-foreground: #ffffff;
-  --color-link: #005f8f;
-  --color-focus: #d9a441;
-  --color-accent-soft: #fff4cc;
-  --background: var(--color-page);
-  --foreground: var(--color-page-foreground);
+  --color-page: var(--color-background);
+  --color-page-foreground: var(--color-foreground);
+  --color-heading: var(--color-accent-foreground);
+  --color-text: var(--color-foreground);
+  --color-text-muted: var(--color-muted-foreground);
+  --color-link: var(--color-primary);
+  --color-brand: var(--color-primary);
+  --color-brand-hover: var(--color-primary-hover);
+  --color-brand-foreground: var(--color-primary-foreground);
+  --color-surface-strong: var(--color-secondary);
+  --color-surface-strong-foreground: var(--color-secondary-foreground);
+  --color-accent-soft: var(--color-accent);
+  --background: var(--color-background);
+  --foreground: var(--color-foreground);
 }
 
 @theme inline {
@@ -28,6 +25,15 @@
   --color-page-foreground: var(--color-page-foreground);
   --color-surface: var(--color-surface);
   --color-surface-muted: var(--color-surface-muted);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
   --color-surface-strong: var(--color-surface-strong);
   --color-surface-strong-foreground: var(--color-surface-strong-foreground);
   --color-border: var(--color-border);
@@ -40,19 +46,71 @@
   --color-link: var(--color-link);
   --color-focus: var(--color-focus);
   --color-accent-soft: var(--color-accent-soft);
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-mono: "Courier New", monospace;
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+
+  --font-sans: var(--font-family-sans);
+  --font-heading: var(--font-family-heading);
+  --font-mono: var(--font-family-mono);
+
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-heading-md: var(--font-size-xl);
+  --text-heading-lg: var(--font-size-3xl);
+  --text-display-md: var(--font-size-4xl);
+  --text-display-lg: var(--font-size-5xl);
+
+  --leading-tight: var(--line-height-tight);
+  --leading-normal: var(--line-height-normal);
+  --leading-relaxed: var(--line-height-relaxed);
+
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-7: var(--space-7);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-14: var(--space-14);
+  --spacing-16: var(--space-16);
+  --spacing-24: var(--space-24);
+  --spacing-container: var(--container-padding);
+  --spacing-container-wide: var(--container-padding-wide);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+
+  --container-container-sm: var(--container-sm);
+  --container-container-md: var(--container-md);
+  --container-container-lg: var(--container-lg);
+  --container-container-xl: var(--container-xl);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-sans);
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 4px;
+  outline: var(--space-1) solid var(--color-focus);
+  outline-offset: var(--space-1);
 }
 
 .cms-rich-text {
@@ -65,11 +123,11 @@ body {
 
 .cms-rich-text :where(a) {
   color: var(--color-link);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
 .cms-rich-text :where(p, ul, ol, blockquote) {
-  margin-block: 1rem;
+  margin-block: var(--space-4);
 }

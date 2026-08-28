@@ -653,6 +653,11 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  branding?: {
+    primaryColor?: string | null;
+    secondaryColor?: string | null;
+    accentColor?: string | null;
+  };
   defaultSEO?: {
     title?: string | null;
     description?: string | null;
@@ -710,6 +715,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         label?: T;
         url?: T;
         id?: T;
+      };
+  branding?:
+    | T
+    | {
+        primaryColor?: T;
+        secondaryColor?: T;
+        accentColor?: T;
       };
   defaultSEO?:
     | T

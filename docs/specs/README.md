@@ -80,6 +80,59 @@ Algumas combinações atuais de cores podem gerar baixo contraste, como fundo es
 - `text-muted`: cinza esverdeado medio.
 - `link`: azul institucional.
 
+## SPEC-012 - Design Tokens Foundation
+
+A SPEC-012 centraliza os tokens visuais base do frontend e migra componentes compartilhados existentes para nomes semanticos.
+
+### Inventario encontrado
+
+- Cores hex estavam concentradas em `src/app/(frontend)/globals.css`.
+- Espacamentos recorrentes: `px-6`, `sm:px-10`, `py-12`, `py-14`, `py-16`, `py-24`, `gap-10`.
+- Containers recorrentes: `max-w-3xl` e `max-w-6xl`.
+- Radius recorrentes: `rounded-md`, `rounded-lg`, `rounded-xl`.
+- Tipografia recorrente: `text-sm`, `text-lg`, `text-xl`, `text-3xl`, `text-4xl`, `text-5xl`, `leading-8`, `font-semibold`.
+- Nao havia uso real de sombras nos componentes inspecionados.
+
+### Decisoes registradas
+
+- `src/styles/tokens.css` e a fonte central dos valores visuais.
+- `globals.css` importa os tokens e os expoe ao Tailwind por nomes semanticos.
+- Foram mantidos aliases temporarios para tokens da SPEC-011, evitando regressao imediata.
+- Blocks existentes passaram a consumir tokens semanticos de cor, container, tipografia, spacing e radius.
+- Valores hex ficam restritos ao arquivo central de tokens.
+
+### Escopo nao implementado nesta spec
+
+- Global `Theme` no Payload.
+- Variantes configuraveis no CMS.
+- Redesign de Hero, Cards, CTA ou demais Blocks.
+- Dark mode.
+- Editor visual.
+
+## SPEC-013 - Theme Global e Branding
+
+A SPEC-013 permite que o administrador configure branding institucional limitado pelo Payload, enquanto o codigo continua controlando o Design System.
+
+### Decisoes registradas
+
+- `SiteSettings` foi evoluido com `branding`, evitando criar um novo Global `Theme` para nao duplicar metadados do site.
+- O logo permanece em `Header.logo`, que ja existia antes desta spec.
+- O administrador controla apenas `primaryColor`, `secondaryColor` e `accentColor`.
+- Campos de cor aceitam somente hexadecimal curto ou longo.
+- `src/lib/theme/get-theme.ts` centraliza a leitura do Payload.
+- `src/lib/theme/map-theme-to-css-variables.ts` sanitiza valores do CMS e aplica somente CSS variables conhecidas.
+- Valores vazios ou invalidos sao ignorados para preservar os defaults da SPEC-012.
+- As variaveis sao aplicadas uma unica vez no root layout do frontend.
+
+### Escopo nao implementado nesta spec
+
+- Global `Theme` separado.
+- Seletor de fonte livre.
+- Upload de CSS, `customCss`, `className` ou Tailwind editavel pelo CMS.
+- Dark mode completo.
+- Temas por pagina, por usuario ou multiplos temas.
+- Variantes de Blocks.
+
 ## SPEC-005 - Drafts, Preview e Publishing
 
 A SPEC-005 separa edicao editorial de publicacao usando drafts nativos do Payload e Draft Mode do Next.js.
