@@ -53,3 +53,29 @@ Use `.env.example` como referencia para as variaveis obrigatorias. Secrets reais
 
 - Frontend: `http://localhost:3000`
 - Payload Admin: `http://localhost:3000/admin`
+
+## SPEC-011 - Base Theme Readability
+
+A SPEC-011 define uma etapa de tema base provisório para garantir legibilidade dos Blocks existentes antes da identidade visual definitiva.
+
+### Motivação
+
+Algumas combinações atuais de cores podem gerar baixo contraste, como fundo escuro com texto escuro ou texto claro sobre superfície clara.
+
+### Escopo
+
+- Centralizar tokens semânticos em `src/app/(frontend)/globals.css`.
+- Aplicar o tema base aos Blocks existentes.
+- Preservar schemas do Payload, routing, preview e conteúdo CMS.
+
+### Decisao de paleta provisoria
+
+- `page`: verde-cinza muito claro.
+- `surface`: branco.
+- `surface-muted`: verde-cinza claro.
+- `surface-strong`: azul-petroleo escuro.
+- `brand`: verde-azulado institucional.
+- `accent-soft`: amarelo suave para destaques pontuais.
+- `text`: grafite.
+- `text-muted`: cinza esverdeado medio.
+- `link`: azul institucional.

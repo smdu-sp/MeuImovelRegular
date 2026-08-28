@@ -14,13 +14,13 @@ export function HeroBlock({
   const withImage = variant === "image";
 
   return (
-    <section className="bg-slate-950 text-white">
+    <section className="bg-surface-strong text-surface-strong-foreground">
       <div
         className={`mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 sm:px-10 lg:py-24 ${withImage ? "items-center lg:grid-cols-2" : ""}`}
       >
         <div className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
           {eyebrow ? (
-            <p className="text-sm font-semibold uppercase tracking-widest text-amber-300">
+            <p className="text-sm font-semibold uppercase text-accent-soft">
               {eyebrow}
             </p>
           ) : null}
@@ -28,10 +28,12 @@ export function HeroBlock({
             {title}
           </h1>
           {description ? (
-            <p className="mt-6 text-lg leading-8 text-slate-200">{description}</p>
+            <p className="mt-6 text-lg leading-8 text-surface-strong-foreground">
+              {description}
+            </p>
           ) : null}
           <BlockLink
-            className="mt-8 inline-flex rounded-md bg-amber-400 px-5 py-3 font-semibold text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="mt-8 inline-flex rounded-md bg-brand px-5 py-3 font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
             link={cta}
           />
         </div>

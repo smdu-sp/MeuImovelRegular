@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Page } from "../../payload-types";
+import { pageSlugToPath } from "../../domain/slug";
 
 export type LinkValue = {
   label?: string | null;
@@ -15,7 +16,7 @@ const getHref = (link: LinkValue): string | null => {
   }
 
   if (link.page && typeof link.page === "object") {
-    return link.page.slug === "home" ? "/" : `/${link.page.slug}`;
+    return pageSlugToPath(link.page.slug);
   }
 
   return null;
@@ -37,7 +38,15 @@ export function BlockLink({
   const rel = link.newTab ? "noopener noreferrer" : undefined;
 
   return (
-    <Link className={className} href={href} rel={rel} target={target}>
+    <Link
+      className={
+        className ||
+        "font-semibold text-link underline decoration-2 underline-offset-4"
+      }
+      href={href}
+      rel={rel}
+      target={target}
+    >
       {link.label}
     </Link>
   );

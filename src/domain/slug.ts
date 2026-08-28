@@ -1,4 +1,4 @@
-const HOME_SLUG = "home";
+export const HOME_SLUG = "home";
 
 export const normalizePageSlug = (value: unknown): string => {
   if (typeof value !== "string") {
@@ -27,5 +27,17 @@ export const validatePageSlug = (value: unknown): true | string => {
   }
 
   return true;
+};
+
+export const pathToPageSlug = (path: string): string => {
+  const normalizedPath = path.trim().replace(/^\/+|\/+$/g, "");
+
+  return normalizedPath ? normalizePageSlug(normalizedPath) : HOME_SLUG;
+};
+
+export const pageSlugToPath = (slug: string): string => {
+  const normalizedSlug = normalizePageSlug(slug);
+
+  return normalizedSlug === HOME_SLUG ? "/" : `/${normalizedSlug}`;
 };
 

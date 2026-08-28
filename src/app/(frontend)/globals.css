@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-page: #f7f9f7;
+  --color-page-foreground: #24302f;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef4f1;
+  --color-surface-strong: #103b3f;
+  --color-surface-strong-foreground: #ffffff;
+  --color-border: #cad8d2;
+  --color-heading: #142724;
+  --color-text: #2f3d3a;
+  --color-text-muted: #5e7069;
+  --color-brand: #007a73;
+  --color-brand-hover: #00645f;
+  --color-brand-foreground: #ffffff;
+  --color-link: #005f8f;
+  --color-focus: #d9a441;
+  --color-accent-soft: #fff4cc;
+  --background: var(--color-page);
+  --foreground: var(--color-page-foreground);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-page: var(--color-page);
+  --color-page-foreground: var(--color-page-foreground);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-surface-strong: var(--color-surface-strong);
+  --color-surface-strong-foreground: var(--color-surface-strong-foreground);
+  --color-border: var(--color-border);
+  --color-heading: var(--color-heading);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-foreground: var(--color-brand-foreground);
+  --color-link: var(--color-link);
+  --color-focus: var(--color-focus);
+  --color-accent-soft: var(--color-accent-soft);
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: "Courier New", monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.cms-rich-text {
+  color: var(--color-text);
+}
+
+.cms-rich-text :where(h1, h2, h3, h4, h5, h6, strong) {
+  color: var(--color-heading);
+}
+
+.cms-rich-text :where(a) {
+  color: var(--color-link);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cms-rich-text :where(p, ul, ol, blockquote) {
+  margin-block: 1rem;
 }
