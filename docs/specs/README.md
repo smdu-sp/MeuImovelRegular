@@ -98,3 +98,23 @@ A SPEC-005 separa edicao editorial de publicacao usando drafts nativos do Payloa
 - Live Preview em tempo real.
 - Fluxo editorial multi-etapas.
 - Criacao automatica de conteudo inicial.
+
+## SPEC-006 - Editorial Baseline
+
+A SPEC-006 cria o primeiro seed editorial editavel pelo Payload para provar a arquitetura editorial do portal.
+
+### Decisoes registradas
+
+- O seed fica em `src/seeds/editorial-baseline.ts` e pode ser executado com `npm run seed:editorial`.
+- O seed e idempotente por slug: atualiza paginas existentes e cria as ausentes.
+- As paginas iniciais sao publicadas no Payload para aparecerem no frontend publico.
+- Slugs de `pages` passaram a aceitar segmentos com `/` para suportar rotas como `modalidades/automatica`.
+- A rota frontend dinamica passou de `[slug]` para `[...slug]` para carregar paginas CMS em subcaminhos.
+- O prazo inicial fica em `site-settings.deadline`; a home apenas demonstra o aviso em bloco editavel.
+- Header, footer e links oficiais recebem conteudo inicial editavel pelo administrador.
+
+### Escopo nao implementado nesta spec
+
+- Rota especial `/situacao`.
+- `DeadlineBanner` especializado.
+- Novas collections, novos blocks ou triagem.

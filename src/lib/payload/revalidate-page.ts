@@ -7,5 +7,9 @@ export function revalidatePage(slug: unknown): void {
     return;
   }
 
-  revalidatePath(pageSlugToPath(slug));
+  try {
+    revalidatePath(pageSlugToPath(slug));
+  } catch {
+    // Seeds and CLI scripts run outside the Next.js request/cache context.
+  }
 }

@@ -89,11 +89,11 @@ Live Preview poderá virar uma Spec separada se houver necessidade editorial rea
 
 ## Critérios de aceite
 
-- [ ] draft não é público;
-- [ ] Admin consegue salvar draft;
-- [ ] Admin consegue abrir Preview;
-- [ ] preview mostra conteúdo não publicado;
-- [ ] Publish torna conteúdo público;
-- [ ] alteração publicada invalida cache necessário.
+- [x] draft não é público;
+- [x] Admin consegue salvar draft;
+- [x] Admin consegue abrir Preview;
+- [x] preview mostra conteúdo não publicado;
+- [x] Publish torna conteúdo público;
+- [x] alteração publicada invalida cache necessário.
 
 ---

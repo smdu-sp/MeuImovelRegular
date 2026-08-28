@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 
 type Args = {
   params: Promise<{
-    slug: string;
+    slug: string[];
   }>;
 };
 

@@ -102,10 +102,10 @@ SiteSettings.defaultSEO
 
 ## Critérios de aceite
 
-- [ x ] `/` utiliza Page `home`;
-- [ x ] `/teste` pode ser criada somente pelo CMS;
-- [ x ] remover Page faz a rota deixar de existir;
-- [ x ] slug inexistente retorna 404;
-- [ x ] título e description chegam ao metadata.
+- [x] `/` utiliza Page `home`;
+- [x] `/teste` pode ser criada somente pelo CMS;
+- [x] remover Page faz a rota deixar de existir;
+- [x] slug inexistente retorna 404;
+- [x] título e description chegam ao metadata.
 
 ---

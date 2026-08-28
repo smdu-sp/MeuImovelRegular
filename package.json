@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "payload": "payload"
+    "payload": "payload",
+    "seed:editorial": "payload run src/seeds/editorial-baseline.ts"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "3.88.0",

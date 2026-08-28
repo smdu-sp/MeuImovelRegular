@@ -128,12 +128,12 @@ O prazo institucional deve estar no CMS, e não em um componente React.
 
 No Admin deve ser possível:
 
-- [ x ] criar mídia;
-- [ x ] preencher texto alternativo;
-- [ x ] criar Page;
-- [ x ] editar Header;
-- [ x ] editar Footer;
-- [ x ] editar SiteSettings;
-- [ x ] alterar o prazo sem alterar código.
+- [x] criar mídia;
+- [x] preencher texto alternativo;
+- [x] criar Page;
+- [x] editar Header;
+- [x] editar Footer;
+- [x] editar SiteSettings;
+- [x] alterar o prazo sem alterar código.
 
 ---

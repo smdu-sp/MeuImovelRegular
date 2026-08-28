@@ -11,7 +11,14 @@ export const normalizePageSlug = (value: unknown): string => {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/^\/+|\/+$/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
+    .split("/")
+    .map((segment) =>
+      segment
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, ""),
+    )
+    .filter(Boolean)
+    .join("/")
     .replace(/^-+|-+$/g, "");
 
   return normalized || (value.trim().includes("/") ? HOME_SLUG : "");
@@ -22,15 +29,16 @@ export const validatePageSlug = (value: unknown): true | string => {
     return "Informe um slug.";
   }
 
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) {
-    return "Use apenas letras minúsculas, números e hífens.";
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*$/.test(value)) {
+    return "Use letras minusculas, numeros, hifens e barras entre segmentos.";
   }
 
   return true;
 };
 
-export const pathToPageSlug = (path: string): string => {
-  const normalizedPath = path.trim().replace(/^\/+|\/+$/g, "");
+export const pathToPageSlug = (path: string | string[]): string => {
+  const rawPath = Array.isArray(path) ? path.join("/") : path;
+  const normalizedPath = rawPath.trim().replace(/^\/+|\/+$/g, "");
 
   return normalizedPath ? normalizePageSlug(normalizedPath) : HOME_SLUG;
 };
@@ -40,4 +48,3 @@ export const pageSlugToPath = (slug: string): string => {
 
   return normalizedSlug === HOME_SLUG ? "/" : `/${normalizedSlug}`;
 };
-

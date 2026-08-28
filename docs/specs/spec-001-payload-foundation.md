@@ -119,14 +119,14 @@ Deve ser possível:
 
 ## Critérios de aceite
 
-- [ ] aplicação inicializa sem erro;
-- [ ] Next.js funciona;
-- [ ] Payload Admin funciona;
-- [ ] banco conecta;
-- [ ] `.env.example` existe;
-- [ ] secrets não estão versionados;
-- [ ] versões relevantes estão registradas;
-- [ ] lint passa;
-- [ ] typecheck passa.
+- [x] aplicação inicializa sem erro;
+- [x] Next.js funciona;
+- [x] Payload Admin funciona;
+- [x] banco conecta;
+- [x] `.env.example` existe;
+- [x] secrets não estão versionados;
+- [x] versões relevantes estão registradas;
+- [x] lint passa;
+- [x] typecheck passa.
 
 ---
