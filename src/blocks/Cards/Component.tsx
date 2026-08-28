@@ -1,45 +1,44 @@
 import type { CardsBlock as CardsBlockProps } from "../../payload-types";
+import { Card, Container, Heading, Section, Text } from "../../components/ui";
 import { MediaImage } from "../shared/MediaImage";
 import { BlockLink } from "../shared/BlockLink";
 
 export function CardsBlock({ description, items, title }: CardsBlockProps) {
   return (
-    <section className="bg-muted px-container py-14 sm:px-container-wide">
-      <div className="mx-auto max-w-container-lg">
+    <Section spacing="md" tone="muted">
+      <Container size="lg">
         {title ? (
-          <h2 className="font-heading text-heading-lg font-semibold text-heading">
+          <Heading level={2} size="lg">
             {title}
-          </h2>
+          </Heading>
         ) : null}
         {description ? (
-          <p className="mt-4 max-w-container-sm text-lg leading-relaxed text-muted-foreground">
-            {description}
-          </p>
+          <div className="mt-4 max-w-container-sm">
+            <Text variant="muted">{description}</Text>
+          </div>
         ) : null}
         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
-            <li
-              className="rounded-lg border border-border bg-surface p-6"
-              key={item.id}
-            >
-              <MediaImage
-                className="mb-5 h-12 w-12 object-contain"
-                media={item.icon}
-              />
-              <h3 className="font-heading text-heading-md font-semibold text-heading">
-                {item.title}
-              </h3>
-              <p className="mt-3 leading-relaxed text-foreground">
-                {item.description}
-              </p>
-              <BlockLink
-                className="mt-5 inline-flex font-semibold text-link underline decoration-2 underline-offset-4"
-                link={item.link}
-              />
+            <li key={item.id}>
+              <Card>
+                <MediaImage
+                  className="mb-5 h-12 w-12 object-contain"
+                  media={item.icon}
+                />
+                <Heading level={3} size="md">
+                  {item.title}
+                </Heading>
+                <div className="mt-3">
+                  <Text>{item.description}</Text>
+                </div>
+                <div className="mt-5">
+                  <BlockLink link={item.link} />
+                </div>
+              </Card>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

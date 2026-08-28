@@ -1,5 +1,6 @@
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { ImageTextBlock as ImageTextBlockProps } from "../../payload-types";
+import { Container, Heading, Section } from "../../components/ui";
 import { MediaImage } from "../shared/MediaImage";
 import { BlockLink } from "../shared/BlockLink";
 
@@ -11,26 +12,27 @@ export function ImageTextBlock({
   title,
 }: ImageTextBlockProps) {
   return (
-    <section className="bg-background px-container py-12 sm:px-container-wide">
-      <div className="mx-auto grid max-w-container-lg items-center gap-10 lg:grid-cols-2">
+    <Section spacing="sm" tone="default">
+      <Container size="lg">
+      <div className="grid items-center gap-10 lg:grid-cols-2">
         <MediaImage
           className={`h-auto w-full rounded-xl object-cover ${imagePosition === "right" ? "lg:order-2" : ""}`}
           media={image}
         />
         <div>
-          <h2 className="font-heading text-heading-lg font-semibold text-heading">
+          <Heading level={2} size="lg">
             {title}
-          </h2>
+          </Heading>
           <RichText
             className="cms-rich-text mt-5 leading-relaxed"
             data={content}
           />
-          <BlockLink
-            className="mt-6 inline-flex font-semibold text-link underline decoration-2 underline-offset-4"
-            link={cta}
-          />
+          <div className="mt-6">
+            <BlockLink link={cta} />
+          </div>
         </div>
       </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

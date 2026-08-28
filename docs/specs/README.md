@@ -133,6 +133,34 @@ A SPEC-013 permite que o administrador configure branding institucional limitado
 - Temas por pagina, por usuario ou multiplos temas.
 - Variantes de Blocks.
 
+## SPEC-014 - UI Primitives
+
+A SPEC-014 cria primitives visuais reutilizaveis para reduzir duplicacao de container, secao, tipografia e acoes nos Blocks existentes.
+
+### Inventario encontrado
+
+- `Hero`, `CTA`, `Cards`, `ImageText` e `RichText` repetiam containers, espacamento lateral e largura maxima.
+- `Hero`, `CTA`, `Cards` e `ImageText` repetiam headings e textos com classes tipograficas similares.
+- `Hero`, `CTA`, `Cards` e `ImageText` repetiam estilos de links/botoes.
+- `Cards` e `CTA` tinham superficies enquadradas que justificam uma primitive `Card`.
+- `Header` e `Footer` ainda nao possuem renderizacao frontend compartilhada nesta etapa.
+
+### Decisoes registradas
+
+- Primitives criadas em `src/components/ui`: `Container`, `Section`, `Heading`, `Text`, `Button` e `Card`.
+- `Card` foi incluida por necessidade concreta dos Blocks atuais.
+- Nenhuma primitive aceita `className` como API publica; variantes e tamanhos sao fechados.
+- `Button` suporta botao real e link com aparencia de botao sem perder semantica HTML.
+- `BlockLink` passou a usar aparencias fechadas (`text`, `primary`, `secondary`, `outline`, `ghost`) em vez de receber classe arbitraria.
+- `Hero` foi migrado como piloto e os demais Blocks existentes foram migrados depois da validacao.
+
+### Escopo nao implementado nesta spec
+
+- Redesign completo dos Blocks.
+- Animacoes ou sistema de motion.
+- Novos Blocks.
+- Primitives especificas de pagina.
+
 ## SPEC-005 - Drafts, Preview e Publishing
 
 A SPEC-005 separa edicao editorial de publicacao usando drafts nativos do Payload e Draft Mode do Next.js.
