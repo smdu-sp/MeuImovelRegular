@@ -79,3 +79,22 @@ Algumas combinações atuais de cores podem gerar baixo contraste, como fundo es
 - `text`: grafite.
 - `text-muted`: cinza esverdeado medio.
 - `link`: azul institucional.
+
+## SPEC-005 - Drafts, Preview e Publishing
+
+A SPEC-005 separa edicao editorial de publicacao usando drafts nativos do Payload e Draft Mode do Next.js.
+
+### Decisoes registradas
+
+- `pages` usa `versions.drafts` do Payload como fonte de status editorial.
+- O campo manual `status` foi removido da collection para evitar duplicidade com `_status`.
+- Visitantes comuns consultam apenas paginas com `_status` igual a `published`.
+- Preview usa `/api/draft?collection=pages&slug=...&token=...` e exige token de usuario autenticado do Payload.
+- A URL de preview e gerada pelo Admin de `pages`.
+- Publicacoes e alteracoes disparam `revalidatePath` para o caminho publico correspondente ao slug.
+
+### Escopo nao implementado nesta spec
+
+- Live Preview em tempo real.
+- Fluxo editorial multi-etapas.
+- Criacao automatica de conteudo inicial.

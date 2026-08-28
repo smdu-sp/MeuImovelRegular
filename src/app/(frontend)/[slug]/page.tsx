@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { RenderBlocks } from "../../../components/RenderBlocks";
@@ -17,7 +18,7 @@ type Args = {
   }>;
 };
 
-async function getRoutePage({ params }: Args) {
+async function getRoutePage({ params }: Args, draft: boolean) {
   const { slug } = await params;
   const pageSlug = pathToPageSlug(slug);
 
@@ -25,11 +26,12 @@ async function getRoutePage({ params }: Args) {
     return null;
   }
 
-  return getPage(pageSlug);
+  return getPage(pageSlug, { draft });
 }
 
 export async function generateMetadata(args: Args): Promise<Metadata> {
-  const page = await getRoutePage(args);
+  const { isEnabled } = await draftMode();
+  const page = await getRoutePage(args, isEnabled);
 
   if (!page) {
     return {};
@@ -41,7 +43,8 @@ export async function generateMetadata(args: Args): Promise<Metadata> {
 }
 
 export default async function Page(args: Args) {
-  const page = await getRoutePage(args);
+  const { isEnabled } = await draftMode();
+  const page = await getRoutePage(args, isEnabled);
 
   if (!page) {
     notFound();

@@ -6,17 +6,32 @@ import type { Page, SiteSetting } from "../../payload-types";
 
 type PageMetadataSource = Pick<Page, "seo" | "title">;
 
-export async function getPage(slug: string): Promise<Page | null> {
+type GetPageOptions = {
+  draft?: boolean;
+};
+
+export async function getPage(
+  slug: string,
+  { draft = false }: GetPageOptions = {},
+): Promise<Page | null> {
   const payload = await getPayload({ config });
 
   const result = await payload.find({
     collection: "pages",
     depth: 2,
+    draft,
     limit: 1,
     where: {
       slug: {
         equals: slug,
       },
+      ...(draft
+        ? {}
+        : {
+            _status: {
+              equals: "published",
+            },
+          }),
     },
   });
 

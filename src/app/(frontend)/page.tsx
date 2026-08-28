@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { RenderBlocks } from "../../components/RenderBlocks";
@@ -12,7 +13,8 @@ import {
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPage(HOME_SLUG);
+  const { isEnabled } = await draftMode();
+  const page = await getPage(HOME_SLUG, { draft: isEnabled });
 
   if (!page) {
     return {};
@@ -24,7 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const page = await getPage(HOME_SLUG);
+  const { isEnabled } = await draftMode();
+  const page = await getPage(HOME_SLUG, { draft: isEnabled });
 
   if (!page) {
     notFound();

@@ -189,9 +189,9 @@ export interface Page {
     description?: string | null;
     image?: (number | null) | Media;
   };
-  status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -458,9 +458,9 @@ export interface PagesSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
-  status?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
