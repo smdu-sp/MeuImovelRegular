@@ -133,7 +133,7 @@ A aplicação não deve tratar dados locais como fonte oficial do CEDI.
 
 ```text
 Implemente exclusivamente a SPEC-000 localizada em
-docs/specs/000-project-guardrails.md.
+docs/specs/00-project/spec-000-project-guardrails.md.
 
 Antes de alterar arquivos:
 1. inspecione a estrutura atual do projeto;

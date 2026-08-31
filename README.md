@@ -1,5 +1,7 @@
 # Meu Imóvel Regular — Índice de Specs
 
+> **Indice canonico atualizado:** as specs agora ficam organizadas por dominio em [docs/specs/README.md](./docs/specs/README.md). Links antigos neste documento podem se referir ao layout plano anterior.
+
 > **Objetivo:** orientar a implementação incremental do portal Meu Imóvel Regular, executando uma Spec por vez, com validação automática, execução local, revisão humana e aceite explícito.
 
 ## Como usar este conjunto
@@ -12,17 +14,17 @@ Uma Spec só pode ser considerada concluída quando tiver sido implementada, tes
 
 | Ordem | Arquivo | Resultado observável |
 |---:|---|---|
-| 1 | [spec-000-project-guardrails.md](./spec-000-project-guardrails.md) | Arquitetura e limites documentados. |
-| 2 | [spec-001-payload-foundation.md](./spec-001-payload-foundation.md) | Frontend e `/admin` funcionam. |
-| 3 | [spec-002-cms-content-model.md](./spec-002-cms-content-model.md) | Modelo editorial administrável. |
-| 4 | [spec-003-page-blocks.md](./spec-003-page-blocks.md) | Página composta por Blocks. |
-| 5 | [spec-004-cms-routing.md](./spec-004-cms-routing.md) | Slug do CMS gera rota real. |
-| 6 | [spec-005-drafts-preview-publishing.md](./spec-005-drafts-preview-publishing.md) | Draft, Preview e publicação separados. |
-| 7 | [spec-006-editorial-baseline.md](./spec-006-editorial-baseline.md) | Primeiro CMS MVP. |
-| 8 | [spec-007-domain-eligibility.md](./spec-007-domain-eligibility.md) | Triagem de domínio testável sem React. |
-| 9 | [spec-008-cadi-situation-integration.md](./spec-008-cadi-situation-integration.md) | `/situacao` desacoplada do CEDI. |
-| 10 | [spec-009-documents-and-outorga.md](./spec-009-documents-and-outorga.md) | Cartilha e cálculo parametrizável. |
-| 11 | [spec-010-production-hardening.md](./spec-010-production-hardening.md) | Candidato a produção com hardening. |
+| 1 | [spec-000-project-guardrails.md](./docs/specs/00-project/spec-000-project-guardrails.md) | Arquitetura e limites documentados. |
+| 2 | [spec-001-payload-foundation.md](./docs/specs/01-cms-core/spec-001-payload-foundation.md) | Frontend e `/admin` funcionam. |
+| 3 | [spec-002-cms-content-model.md](./docs/specs/01-cms-core/spec-002-cms-content-model.md) | Modelo editorial administrável. |
+| 4 | [spec-003-page-blocks.md](./docs/specs/01-cms-core/spec-003-page-blocks.md) | Página composta por Blocks. |
+| 5 | [spec-004-cms-routing.md](./docs/specs/01-cms-core/spec-004-cms-routing.md) | Slug do CMS gera rota real. |
+| 6 | [spec-005-drafts-preview-publishing.md](./docs/specs/01-cms-core/spec-005-drafts-preview-publishing.md) | Draft, Preview e publicação separados. |
+| 7 | [spec-006-editorial-baseline.md](./docs/specs/01-cms-core/spec-006-editorial-baseline.md) | Primeiro CMS MVP. |
+| 8 | [spec-007-domain-eligibility.md](./docs/specs/02-domain/spec-007-domain-eligibility.md) | Triagem de domínio testável sem React. |
+| 9 | [spec-008-cadi-situation-integration.md](./docs/specs/02-domain/spec-008-cadi-situation-integration.md) | `/situacao` desacoplada do CEDI. |
+| 10 | [spec-009-documents-and-outorga.md](./docs/specs/02-domain/spec-009-documents-and-outorga.md) | Cartilha e cálculo parametrizável. |
+| 11 | [spec-010-production-hardening.md](./docs/specs/00-project/spec-010-production-hardening.md) | Candidato a produção com hardening. |
 
 ## Definition of Done global
 
