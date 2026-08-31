@@ -1,0 +1,116 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import type { Field } from "payload";
+
+import { CardsBlock } from "./blocks/Cards/config";
+import { CTABlock } from "./blocks/CTA/config";
+import { HeroBlock } from "./blocks/Hero/config";
+import { ImageTextBlock } from "./blocks/ImageText/config";
+import { RichTextBlock } from "./blocks/RichText/config";
+import { createLinkFields } from "./blocks/shared/link";
+import { Pages } from "./collections/Pages";
+import { Media } from "./collections/Media";
+import { Footer } from "./globals/Footer";
+import { Header } from "./globals/Header";
+import { SiteSettings } from "./globals/SiteSettings";
+
+type FieldLike = Field & {
+  admin?: {
+    condition?: unknown;
+    description?: string;
+  };
+  label?: string;
+  name?: string;
+};
+
+const fieldByName = (fields: Field[], name: string): FieldLike => {
+  const field = fields.find((candidate) => "name" in candidate && candidate.name === name);
+
+  assert.ok(field, `Expected field ${name} to exist`);
+  return field as FieldLike;
+};
+
+const adminDescription = (field: FieldLike): string | undefined =>
+  typeof field.admin?.description === "string"
+    ? field.admin.description
+    : undefined;
+
+describe("CMS editing UX", () => {
+  it("keeps Pages easy to identify and preview", () => {
+    assert.equal(Pages.admin?.useAsTitle, "title");
+    assert.deepEqual(Pages.admin?.defaultColumns, ["title", "slug", "_status", "updatedAt"]);
+
+    const previewUrl = Pages.admin?.preview?.(
+      { slug: "entenda-a-lei" },
+      { token: "preview-token" } as Parameters<NonNullable<typeof Pages.admin.preview>>[1],
+    );
+
+    assert.equal(
+      previewUrl,
+      "http://localhost:3000/api/draft?collection=pages&slug=entenda-a-lei&token=preview-token",
+    );
+  });
+
+  it("adds editor-facing descriptions to page structure fields", () => {
+    const slug = fieldByName(Pages.fields, "slug");
+    const layout = fieldByName(Pages.fields, "layout");
+    const seo = fieldByName(Pages.fields, "seo");
+
+    assert.equal(slug.label, "Endereco da pagina");
+    assert.match(adminDescription(slug) ?? "", /home/);
+    assert.match(adminDescription(layout) ?? "", /blocos prontos/i);
+    assert.match(adminDescription(seo) ?? "", /buscadores/i);
+  });
+
+  it("describes block variants without exposing implementation vocabulary", () => {
+    const variants = [
+      fieldByName(HeroBlock.fields, "variant"),
+      fieldByName(RichTextBlock.fields, "variant"),
+      fieldByName(ImageTextBlock.fields, "variant"),
+      fieldByName(CTABlock.fields, "variant"),
+    ];
+
+    for (const variant of variants) {
+      assert.notEqual(variant.label, "Variacao");
+      assert.ok(adminDescription(variant));
+    }
+  });
+
+  it("keeps irrelevant link fields conditional and documented", () => {
+    const fields = createLinkFields(true);
+    const page = fieldByName(fields, "page");
+    const url = fieldByName(fields, "url");
+
+    assert.equal(page.label, "Pagina interna");
+    assert.equal(url.label, "URL externa");
+    assert.ok("admin" in page && page.admin?.condition);
+    assert.ok("admin" in url && url.admin?.condition);
+    assert.ok(adminDescription(page));
+    assert.ok(adminDescription(url));
+  });
+
+  it("documents global settings and media fields for non-technical editors", () => {
+    assert.ok(Media.admin?.description);
+    assert.ok(Header.admin?.description);
+    assert.ok(Footer.admin?.description);
+    assert.ok(SiteSettings.admin?.description);
+
+    const branding = fieldByName(SiteSettings.fields, "branding");
+    const alt = fieldByName(Media.fields, "alt");
+
+    assert.equal(branding.label, "Cores institucionais");
+    assert.match(adminDescription(branding) ?? "", /CSS livre/);
+    assert.match(adminDescription(alt) ?? "", /leitores de tela/);
+  });
+
+  it("keeps Cards understandable without adding unsafe layout variants", () => {
+    const items = fieldByName(CardsBlock.fields, "items");
+    const variant = CardsBlock.fields.find(
+      (field) => "name" in field && field.name === "variant",
+    );
+
+    assert.equal(CardsBlock.labels?.singular, "Lista de cards");
+    assert.equal(variant, undefined);
+    assert.match(adminDescription(items) ?? "", /1 a 12 cards/);
+  });
+});

@@ -13,17 +13,25 @@ export const createLinkFields = (required = false): Field[] => [
   {
     name: "label",
     type: "text",
-    label: "Rótulo",
+    label: "Texto do link",
     required,
+    admin: {
+      description:
+        "Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.",
+    },
   },
   {
     name: "type",
     type: "select",
-    label: "Tipo",
+    label: "Destino do link",
     required,
     defaultValue: "internal",
+    admin: {
+      description:
+        "Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.",
+    },
     options: [
-      { label: "Página interna", value: "internal" },
+      { label: "Pagina interna", value: "internal" },
       { label: "URL externa", value: "external" },
     ],
   },
@@ -31,15 +39,16 @@ export const createLinkFields = (required = false): Field[] => [
     name: "page",
     type: "relationship",
     relationTo: "pages",
-    label: "Página",
+    label: "Pagina interna",
     admin: {
       condition: (_, siblingData) => siblingData?.type === "internal",
+      description: "Pagina publicada ou em rascunho dentro deste CMS.",
     },
     validate: ((value, { siblingData }) => {
       const link = siblingData as LinkSiblingData;
       return link.type !== "internal" || (!required && !link.label) || value
-          ? true
-          : "Selecione uma página interna.";
+        ? true
+        : "Selecione uma pagina interna.";
     }) satisfies RelationshipFieldSingleValidation,
   },
   {
@@ -48,6 +57,8 @@ export const createLinkFields = (required = false): Field[] => [
     label: "URL externa",
     admin: {
       condition: (_, siblingData) => siblingData?.type === "external",
+      description:
+        "Informe o endereco completo, incluindo http:// ou https://.",
     },
     validate: ((value, { siblingData }) => {
       const link = siblingData as LinkSiblingData;
@@ -61,7 +72,7 @@ export const createLinkFields = (required = false): Field[] => [
           ? true
           : "Use uma URL iniciada por http:// ou https://.";
       } catch {
-        return "Informe uma URL válida.";
+        return "Informe uma URL valida.";
       }
     }) satisfies TextFieldValidation,
   },
@@ -70,5 +81,9 @@ export const createLinkFields = (required = false): Field[] => [
     type: "checkbox",
     label: "Abrir em nova aba",
     defaultValue: false,
+    admin: {
+      description:
+        "Recomendado para links externos, mantendo o portal aberto na aba atual.",
+    },
   },
 ];

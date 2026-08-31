@@ -5,16 +5,29 @@ export const ImageTextBlock: Block = {
   slug: "imageText",
   interfaceName: "ImageTextBlock",
   labels: {
-    singular: "Imagem e texto",
-    plural: "Imagem e textos",
+    singular: "Imagem com texto",
+    plural: "Imagens com texto",
   },
   fields: [
-    { name: "title", type: "text", label: "Título", required: true },
+    {
+      name: "title",
+      type: "text",
+      label: "Titulo",
+      required: true,
+      admin: {
+        description:
+          "Titulo da secao que acompanha a imagem.",
+      },
+    },
     {
       name: "content",
       type: "richText",
-      label: "Conteúdo",
+      label: "Conteudo",
       required: true,
+      admin: {
+        description:
+          "Texto complementar exibido ao lado da imagem em telas maiores.",
+      },
     },
     {
       name: "image",
@@ -22,22 +35,34 @@ export const ImageTextBlock: Block = {
       relationTo: "media",
       label: "Imagem",
       required: true,
+      admin: {
+        description:
+          "Imagem principal do bloco. Em celulares, ela aparece antes do texto.",
+      },
     },
     {
-      name: "imagePosition",
+      name: "variant",
       type: "select",
-      label: "Posição da imagem",
+      label: "Posicao da imagem no desktop",
       required: true,
-      defaultValue: "left",
+      defaultValue: "image-left",
+      admin: {
+        description:
+          "Escolha o lado da imagem em telas grandes. Em dispositivos moveis, imagem e texto ficam empilhados.",
+      },
       options: [
-        { label: "Esquerda", value: "left" },
-        { label: "Direita", value: "right" },
+        { label: "Imagem a esquerda", value: "image-left" },
+        { label: "Imagem a direita", value: "image-right" },
       ],
     },
     {
       name: "cta",
       type: "group",
-      label: "Ação",
+      label: "Acao complementar",
+      admin: {
+        description:
+          "Link opcional exibido apos o texto.",
+      },
       fields: createLinkFields(),
     },
   ],

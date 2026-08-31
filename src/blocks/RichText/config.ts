@@ -4,25 +4,33 @@ export const RichTextBlock: Block = {
   slug: "richText",
   interfaceName: "RichTextBlock",
   labels: {
-    singular: "Texto rico",
-    plural: "Textos ricos",
+    singular: "Texto editorial",
+    plural: "Textos editoriais",
   },
   fields: [
     {
       name: "content",
       type: "richText",
-      label: "Conteúdo",
+      label: "Conteudo",
       required: true,
+      admin: {
+        description:
+          "Area para texto, listas, links e subtitulos. A aparencia final segue a tipografia editorial do portal.",
+      },
     },
     {
-      name: "width",
+      name: "variant",
       type: "select",
-      label: "Largura",
+      label: "Modelo de leitura",
       required: true,
-      defaultValue: "content",
+      defaultValue: "default",
+      admin: {
+        description:
+          "Padrao usa largura ampla para conteudos variados. Leitura estreita favorece textos corridos longos.",
+      },
       options: [
-        { label: "Leitura", value: "content" },
-        { label: "Ampla", value: "wide" },
+        { label: "Padrao", value: "default" },
+        { label: "Leitura estreita", value: "narrow" },
       ],
     },
   ],

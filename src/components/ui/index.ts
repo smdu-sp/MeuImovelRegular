@@ -1,7 +1,7 @@
 export { Button } from "./Button";
 export type { ButtonSize, ButtonVariant } from "./Button";
 export { Card } from "./Card";
-export type { CardTone } from "./Card";
+export type { CardPadding, CardTone } from "./Card";
 export { Container } from "./Container";
 export type { ContainerSize } from "./Container";
 export { Heading } from "./Heading";

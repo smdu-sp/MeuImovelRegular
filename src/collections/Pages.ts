@@ -17,6 +17,8 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     defaultColumns: ["title", "slug", "_status", "updatedAt"],
+    description:
+      "Crie e organize paginas editoriais do portal. Use rascunho, preview e publicacao para controlar o ciclo editorial.",
     preview: (doc, { token }) => {
       if (!token || typeof doc.slug !== "string") {
         return null;
@@ -47,17 +49,21 @@ export const Pages: CollectionConfig = {
       type: "text",
       label: "Título",
       required: true,
+      admin: {
+        description:
+          "Nome exibido no CMS e usado como referencia principal da pagina.",
+      },
     },
     {
       name: "slug",
       type: "text",
-      label: "Slug",
+      label: "Endereco da pagina",
       required: true,
       unique: true,
       index: true,
       admin: {
         description:
-          'Use "home" para a página inicial. O valor "/" também é normalizado para "home".',
+          'Use "home" para a pagina inicial. Para paginas internas, use letras minusculas, numeros e hifens. O valor "/" tambem vira "home".',
       },
       hooks: {
         beforeValidate: [({ value }) => normalizePageSlug(value)],
@@ -67,32 +73,50 @@ export const Pages: CollectionConfig = {
     {
       name: "layout",
       type: "blocks",
-      label: "Conteúdo",
+      label: "Blocos de conteudo",
       blocks: [HeroBlock, RichTextBlock, ImageTextBlock, CardsBlock, CTABlock],
       admin: {
+        description:
+          "Monte a pagina escolhendo blocos prontos. Cada bloco possui opcoes controladas pelo Design System.",
         initCollapsed: true,
       },
     },
     {
       name: "seo",
       type: "group",
-      label: "SEO",
+      label: "SEO e compartilhamento",
+      admin: {
+        description:
+          "Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.",
+      },
       fields: [
         {
           name: "title",
           type: "text",
-          label: "Título",
+          label: "Titulo para buscadores",
+          admin: {
+            description:
+              "Opcional. Se vazio, o titulo principal da pagina continua sendo usado.",
+          },
         },
         {
           name: "description",
           type: "textarea",
-          label: "Descrição",
+          label: "Descricao para buscadores",
+          admin: {
+            description:
+              "Resumo curto da pagina para resultados de busca e cards de compartilhamento.",
+          },
         },
         {
           name: "image",
           type: "upload",
           relationTo: "media",
-          label: "Imagem",
+          label: "Imagem de compartilhamento",
+          admin: {
+            description:
+              "Opcional. Use uma imagem institucional representativa do conteudo.",
+          },
         },
       ],
     },

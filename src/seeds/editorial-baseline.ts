@@ -72,7 +72,7 @@ const contentPage = (
       eyebrow: "Meu Imovel Regular",
       title,
       description,
-      variant: "centered",
+      variant: "default",
     },
     {
       blockType: "richText",
@@ -80,7 +80,7 @@ const contentPage = (
         description,
         "Este conteudo inicial serve como base editorial do CMS e pode ser ajustado pelo administrador.",
       ),
-      width: "content",
+      variant: "narrow",
     },
   ],
 });
@@ -113,7 +113,7 @@ const homeSeed = (links: {
         "Prazo institucional: consulte a data vigente nas configuracoes do site.",
         "Este aviso e conteudo inicial editavel pelo CMS. Datas e referencias oficiais devem ser mantidas no Payload.",
       ),
-      width: "content",
+      variant: "narrow",
     },
     {
       blockType: "cards",
@@ -160,7 +160,7 @@ const homeSeed = (links: {
             url: "https://licenciamento.prefeitura.sp.gov.br/",
             newTab: true,
           },
-      variant: "primary",
+      variant: "brand",
     },
   ],
 });
@@ -302,7 +302,7 @@ for (const slug of pageSeeds.map((seed) => seed.slug).filter((slug) => slug !== 
           description:
             "Use esta pagina como orientacao preliminar e confirme os detalhes nos servicos oficiais.",
           action: internalLink("Voltar ao inicio", home),
-          variant: "secondary",
+          variant: "compact",
         },
       ].filter(Boolean) as PageBlock[],
     },

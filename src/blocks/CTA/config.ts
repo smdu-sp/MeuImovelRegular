@@ -5,27 +5,53 @@ export const CTABlock: Block = {
   slug: "cta",
   interfaceName: "CTABlock",
   labels: {
-    singular: "Chamada para ação",
-    plural: "Chamadas para ação",
+    singular: "Chamada de acao",
+    plural: "Chamadas de acao",
   },
   fields: [
-    { name: "title", type: "text", label: "Título", required: true },
-    { name: "description", type: "textarea", label: "Descrição" },
+    {
+      name: "title",
+      type: "text",
+      label: "Titulo",
+      required: true,
+      admin: {
+        description:
+          "Mensagem curta que encerra uma secao ou orienta o proximo passo.",
+      },
+    },
+    {
+      name: "description",
+      type: "textarea",
+      label: "Descricao",
+      admin: {
+        description:
+          "Texto opcional para explicar o contexto da chamada.",
+      },
+    },
     {
       name: "action",
       type: "group",
-      label: "Ação",
+      label: "Link da acao",
+      admin: {
+        description:
+          "Destino obrigatorio da chamada. Use pagina interna ou URL oficial externa.",
+      },
       fields: createLinkFields(true),
     },
     {
       name: "variant",
       type: "select",
-      label: "Variação",
+      label: "Modelo de chamada",
       required: true,
-      defaultValue: "primary",
+      defaultValue: "default",
+      admin: {
+        description:
+          "Padrao serve para chamadas gerais; Destaque institucional usa fundo forte; Compacta funciona melhor em encerramentos repetidos.",
+      },
       options: [
-        { label: "Primária", value: "primary" },
-        { label: "Secundária", value: "secondary" },
+        { label: "Padrao", value: "default" },
+        { label: "Destaque institucional", value: "brand" },
+        { label: "Compacta", value: "compact" },
       ],
     },
   ],

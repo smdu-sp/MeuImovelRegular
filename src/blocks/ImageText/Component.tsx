@@ -4,34 +4,53 @@ import { Container, Heading, Section } from "../../components/ui";
 import { MediaImage } from "../shared/MediaImage";
 import { BlockLink } from "../shared/BlockLink";
 
+type ImageTextVariant = "image-left" | "image-right";
+
+type ImageTextBlockWithLegacyProps = ImageTextBlockProps & {
+  imagePosition?: "left" | "right" | string | null;
+};
+
+export function normalizeImageTextVariant(
+  variant: ImageTextBlockProps["variant"] | "left" | "right" | string | null | undefined,
+): ImageTextVariant {
+  if (variant === "image-right" || variant === "right") return "image-right";
+  return "image-left";
+}
+
 export function ImageTextBlock({
   content,
   cta,
   image,
   imagePosition,
+  variant,
   title,
-}: ImageTextBlockProps) {
+}: ImageTextBlockWithLegacyProps) {
+  const normalizedVariant = normalizeImageTextVariant(variant ?? imagePosition);
+  const imageOnRight = normalizedVariant === "image-right";
+
   return (
-    <Section spacing="sm" tone="default">
+    <Section spacing="md" tone="default">
       <Container size="lg">
-      <div className="grid items-center gap-10 lg:grid-cols-2">
-        <MediaImage
-          className={`h-auto w-full rounded-xl object-cover ${imagePosition === "right" ? "lg:order-2" : ""}`}
-          media={image}
-        />
-        <div>
-          <Heading level={2} size="lg">
-            {title}
-          </Heading>
-          <RichText
-            className="cms-rich-text mt-5 leading-relaxed"
-            data={content}
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <MediaImage
+            className={`aspect-video h-auto w-full rounded-xl border border-border object-cover ${imageOnRight ? "lg:order-2" : ""}`}
+            media={image}
           />
-          <div className="mt-6">
-            <BlockLink link={cta} />
+          <div className="max-w-container-sm">
+            <Heading level={2} size="lg">
+              <span className="text-balance break-words">{title}</span>
+            </Heading>
+            <RichText
+              className="cms-rich-text mt-5 leading-relaxed"
+              data={content}
+            />
+            {cta?.label ? (
+              <div className="mt-6">
+                <BlockLink link={cta} />
+              </div>
+            ) : null}
           </div>
         </div>
-      </div>
       </Container>
     </Section>
   );

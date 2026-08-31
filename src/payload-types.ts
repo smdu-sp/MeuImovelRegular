@@ -153,12 +153,20 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Cadastre imagens usadas nos blocos, SEO e identidade visual. O texto alternativo e obrigatorio para acessibilidade.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
+  /**
+   * Descreva objetivamente a imagem para pessoas que usam leitores de tela.
+   */
   alt: string;
+  /**
+   * Opcional. Use quando a imagem precisar de credito, contexto ou complemento editorial.
+   */
   caption?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -173,20 +181,40 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Crie e organize paginas editoriais do portal. Use rascunho, preview e publicacao para controlar o ciclo editorial.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
+  /**
+   * Nome exibido no CMS e usado como referencia principal da pagina.
+   */
   title: string;
   /**
-   * Use "home" para a página inicial. O valor "/" também é normalizado para "home".
+   * Use "home" para a pagina inicial. Para paginas internas, use letras minusculas, numeros e hifens. O valor "/" tambem vira "home".
    */
   slug: string;
+  /**
+   * Monte a pagina escolhendo blocos prontos. Cada bloco possui opcoes controladas pelo Design System.
+   */
   layout?: (HeroBlock | RichTextBlock | ImageTextBlock | CardsBlock | CTABlock)[] | null;
+  /**
+   * Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.
+   */
   seo?: {
+    /**
+     * Opcional. Se vazio, o titulo principal da pagina continua sendo usado.
+     */
     title?: string | null;
+    /**
+     * Resumo curto da pagina para resultados de busca e cards de compartilhamento.
+     */
     description?: string | null;
+    /**
+     * Opcional. Use uma imagem institucional representativa do conteudo.
+     */
     image?: (number | null) | Media;
   };
   updatedAt: string;
@@ -198,18 +226,51 @@ export interface Page {
  * via the `definition` "HeroBlock".
  */
 export interface HeroBlock {
+  /**
+   * Texto curto acima do titulo, usado para contextualizar a pagina.
+   */
   eyebrow?: string | null;
+  /**
+   * Mensagem principal da pagina. Pode ser longo, mas prefira uma frase clara.
+   */
   title: string;
+  /**
+   * Texto opcional abaixo do titulo para orientar o usuario antes da acao.
+   */
   description?: string | null;
+  /**
+   * Usada apenas no modelo Imagem lateral. Em telas pequenas, a imagem fica empilhada abaixo do texto.
+   */
   image?: (number | null) | Media;
+  /**
+   * Link opcional exibido como botao principal da abertura.
+   */
   cta?: {
+    /**
+     * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+     */
     label?: string | null;
+    /**
+     * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+     */
     type?: ('internal' | 'external') | null;
+    /**
+     * Pagina publicada ou em rascunho dentro deste CMS.
+     */
     page?: (number | null) | Page;
+    /**
+     * Informe o endereco completo, incluindo http:// ou https://.
+     */
     url?: string | null;
+    /**
+     * Recomendado para links externos, mantendo o portal aberto na aba atual.
+     */
     newTab?: boolean | null;
   };
-  variant: 'default' | 'centered' | 'image';
+  /**
+   * Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop.
+   */
+  variant: 'default' | 'centered' | 'split';
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
@@ -219,6 +280,9 @@ export interface HeroBlock {
  * via the `definition` "RichTextBlock".
  */
 export interface RichTextBlock {
+  /**
+   * Area para texto, listas, links e subtitulos. A aparencia final segue a tipografia editorial do portal.
+   */
   content: {
     root: {
       type: string;
@@ -234,7 +298,10 @@ export interface RichTextBlock {
     };
     [k: string]: unknown;
   };
-  width: 'content' | 'wide';
+  /**
+   * Padrao usa largura ampla para conteudos variados. Leitura estreita favorece textos corridos longos.
+   */
+  variant: 'default' | 'narrow';
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
@@ -244,7 +311,13 @@ export interface RichTextBlock {
  * via the `definition` "ImageTextBlock".
  */
 export interface ImageTextBlock {
+  /**
+   * Titulo da secao que acompanha a imagem.
+   */
   title: string;
+  /**
+   * Texto complementar exibido ao lado da imagem em telas maiores.
+   */
   content: {
     root: {
       type: string;
@@ -260,13 +333,37 @@ export interface ImageTextBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * Imagem principal do bloco. Em celulares, ela aparece antes do texto.
+   */
   image: number | Media;
-  imagePosition: 'left' | 'right';
+  /**
+   * Escolha o lado da imagem em telas grandes. Em dispositivos moveis, imagem e texto ficam empilhados.
+   */
+  variant: 'image-left' | 'image-right';
+  /**
+   * Link opcional exibido apos o texto.
+   */
   cta?: {
+    /**
+     * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+     */
     label?: string | null;
+    /**
+     * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+     */
     type?: ('internal' | 'external') | null;
+    /**
+     * Pagina publicada ou em rascunho dentro deste CMS.
+     */
     page?: (number | null) | Page;
+    /**
+     * Informe o endereco completo, incluindo http:// ou https://.
+     */
     url?: string | null;
+    /**
+     * Recomendado para links externos, mantendo o portal aberto na aba atual.
+     */
     newTab?: boolean | null;
   };
   id?: string | null;
@@ -278,17 +375,53 @@ export interface ImageTextBlock {
  * via the `definition` "CardsBlock".
  */
 export interface CardsBlock {
+  /**
+   * Titulo opcional exibido antes dos cards.
+   */
   title?: string | null;
+  /**
+   * Texto opcional para explicar o conjunto de cards.
+   */
   description?: string | null;
+  /**
+   * Adicione de 1 a 12 cards. O layout ajusta a quantidade de colunas conforme a largura da tela.
+   */
   items: {
+    /**
+     * Texto principal do card. Pode quebrar linha sem afetar os demais itens.
+     */
     title: string;
+    /**
+     * Resumo ou orientacao exibida dentro do card.
+     */
     description: string;
+    /**
+     * Opcional. Use imagem simples e com texto alternativo adequado.
+     */
     icon?: (number | null) | Media;
+    /**
+     * Opcional. Use quando o card deve encaminhar para outra pagina ou servico.
+     */
     link?: {
+      /**
+       * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+       */
       label?: string | null;
+      /**
+       * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+       */
       type?: ('internal' | 'external') | null;
+      /**
+       * Pagina publicada ou em rascunho dentro deste CMS.
+       */
       page?: (number | null) | Page;
+      /**
+       * Informe o endereco completo, incluindo http:// ou https://.
+       */
       url?: string | null;
+      /**
+       * Recomendado para links externos, mantendo o portal aberto na aba atual.
+       */
       newTab?: boolean | null;
     };
     id?: string | null;
@@ -302,16 +435,43 @@ export interface CardsBlock {
  * via the `definition` "CTABlock".
  */
 export interface CTABlock {
+  /**
+   * Mensagem curta que encerra uma secao ou orienta o proximo passo.
+   */
   title: string;
+  /**
+   * Texto opcional para explicar o contexto da chamada.
+   */
   description?: string | null;
+  /**
+   * Destino obrigatorio da chamada. Use pagina interna ou URL oficial externa.
+   */
   action: {
+    /**
+     * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+     */
     label: string;
+    /**
+     * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+     */
     type: 'internal' | 'external';
+    /**
+     * Pagina publicada ou em rascunho dentro deste CMS.
+     */
     page?: (number | null) | Page;
+    /**
+     * Informe o endereco completo, incluindo http:// ou https://.
+     */
     url?: string | null;
+    /**
+     * Recomendado para links externos, mantendo o portal aberto na aba atual.
+     */
     newTab?: boolean | null;
   };
-  variant: 'primary' | 'secondary';
+  /**
+   * Padrao serve para chamadas gerais; Destaque institucional usa fundo forte; Compacta funciona melhor em encerramentos repetidos.
+   */
+  variant: 'default' | 'brand' | 'compact';
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -490,7 +650,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
  */
 export interface RichTextBlockSelect<T extends boolean = true> {
   content?: T;
-  width?: T;
+  variant?: T;
   id?: T;
   blockName?: T;
 }
@@ -502,7 +662,7 @@ export interface ImageTextBlockSelect<T extends boolean = true> {
   title?: T;
   content?: T;
   image?: T;
-  imagePosition?: T;
+  variant?: T;
   cta?:
     | T
     | {
@@ -603,15 +763,29 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Configure a navegacao principal exibida no topo do portal.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
   id: number;
+  /**
+   * Opcional. Se vazio, o nome do site continua identificando o portal.
+   */
   logo?: (number | null) | Media;
+  /**
+   * Lista de paginas principais exibidas no cabecalho. Mantenha poucos itens para facilitar a leitura.
+   */
   navigation?:
     | {
+        /**
+         * Texto curto exibido no cabecalho.
+         */
         label: string;
+        /**
+         * Pagina de destino dentro do portal.
+         */
         page: number | Page;
         id?: string | null;
       }[]
@@ -620,17 +794,37 @@ export interface Header {
   createdAt?: string | null;
 }
 /**
+ * Configure informacoes institucionais e links exibidos no rodape do portal.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
  */
 export interface Footer {
   id: number;
+  /**
+   * Opcional. Informe somente se houver canal oficial vigente para atendimento.
+   */
   phone?: string | null;
+  /**
+   * Opcional. Informe somente endereco institucional monitorado.
+   */
   email?: string | null;
+  /**
+   * Texto livre para orientar sobre atendimento presencial ou informar que deve ser consultado nos canais oficiais.
+   */
   inPersonService?: string | null;
+  /**
+   * Links para servicos e paginas oficiais relacionados ao portal.
+   */
   institutionalLinks?:
     | {
+        /**
+         * Texto curto exibido no rodape.
+         */
         label: string;
+        /**
+         * Endereco completo do servico ou pagina oficial, incluindo https://.
+         */
         url: string;
         id?: string | null;
       }[]
@@ -639,28 +833,69 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Configure informacoes gerais, links oficiais, SEO padrao e cores institucionais controladas pelo Design System.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * Nome institucional usado como identificacao principal do portal.
+   */
   siteName: string;
+  /**
+   * Data institucional exibida pelo conteudo editorial quando aplicavel. Mantenha este valor alinhado aos atos oficiais.
+   */
   deadline: string;
+  /**
+   * Canais oficiais usados pelo portal para encaminhar o usuario. Evite links informais ou temporarios.
+   */
   officialLinks?:
     | {
+        /**
+         * Texto curto e claro para identificar o canal oficial.
+         */
         label: string;
+        /**
+         * Endereco completo do canal oficial, incluindo https://.
+         */
         url: string;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Ajuste apenas as cores permitidas pelo Design System. Nao e possivel inserir CSS livre.
+   */
   branding?: {
+    /**
+     * Cor principal de botoes, links e destaques. Use hexadecimal curto ou longo, como #007a73.
+     */
     primaryColor?: string | null;
+    /**
+     * Cor de fundos fortes, como areas de destaque. Use hexadecimal curto ou longo.
+     */
     secondaryColor?: string | null;
+    /**
+     * Cor suave para superficies de apoio e chamadas secundarias. Use hexadecimal curto ou longo.
+     */
     accentColor?: string | null;
   };
+  /**
+   * Valores usados quando uma pagina nao possui SEO proprio configurado.
+   */
   defaultSEO?: {
+    /**
+     * Titulo usado por buscadores quando a pagina nao informar um titulo especifico.
+     */
     title?: string | null;
+    /**
+     * Resumo institucional usado quando a pagina nao informar uma descricao especifica.
+     */
     description?: string | null;
+    /**
+     * Imagem usada em compartilhamentos quando a pagina nao tiver uma imagem propria.
+     */
     image?: (number | null) | Media;
   };
   updatedAt?: string | null;

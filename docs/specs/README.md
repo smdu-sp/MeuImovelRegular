@@ -161,6 +161,108 @@ A SPEC-014 cria primitives visuais reutilizaveis para reduzir duplicacao de cont
 - Novos Blocks.
 - Primitives especificas de pagina.
 
+## SPEC-015 - Block Variants
+
+A SPEC-015 fecha variacoes editoriais dos Blocks existentes em enums controlados pelo Payload e interpretados pelo frontend.
+
+### Propositos revisados
+
+- `Hero` abre paginas e apresenta a principal mensagem editorial.
+- `RichText` publica conteudo textual editavel com largura adequada ao contexto.
+- `ImageText` combina conteudo editorial e imagem complementar com controle de ordem no desktop.
+- `Cards` organiza chamadas repetidas em grade; nao recebeu variante porque so existe um comportamento real nesta etapa.
+- `CTA` destaca uma acao editorial ou institucional no fluxo da pagina.
+
+### Decisoes registradas
+
+- `Hero.variant` passou a aceitar `default`, `centered` e `split`.
+- O valor legado `Hero.variant = "image"` e renderizado como `split`.
+- `RichText.variant` passou a aceitar `default` e `narrow`.
+- Valores legados de `RichText.width` continuam aceitos pelo renderer: `content` vira `narrow` e `wide` vira `default`.
+- `ImageText.variant` passou a aceitar `image-left` e `image-right`.
+- Valores legados de `ImageText.imagePosition` continuam aceitos pelo renderer.
+- `CTA.variant` passou a aceitar `default`, `brand` e `compact`.
+- Valores legados de `CTA.variant` continuam aceitos pelo renderer: `primary` vira `brand` e `secondary` vira `default`.
+- Variantes desconhecidas caem em `default`, exceto `ImageText`, que cai em `image-left`.
+- Em mobile, `Hero split` empilha texto e imagem; `ImageText` mantem a imagem antes do texto. A inversao `image-right` ocorre a partir de `lg`.
+- `Cards` permaneceu sem variantes para evitar criar opcao apenas estetica.
+
+### Escopo nao implementado nesta spec
+
+- Novos Blocks.
+- Variante `featured` de Cards.
+- CSS livre, classes editaveis ou layout arbitrario pelo CMS.
+- Redesign visual completo dos Blocks.
+
+## SPEC-016 - Visual Pass dos Blocks
+
+A SPEC-016 revisa visualmente os Blocks existentes usando os tokens, primitives e variantes consolidados nas specs anteriores.
+
+### Decisoes registradas
+
+- `Hero` passou a tratar `split` sem imagem como layout textual, evitando grid vazio.
+- Titulo e descricoes longas receberam quebra e balanceamento de texto onde ha maior risco visual.
+- Imagens de `Hero` e `ImageText` usam proporcao consistente, borda semantica e `object-cover`.
+- `RichText` ganhou estilos globais previsiveis para headings, listas, links, blockquotes, imagens e tabelas.
+- `ImageText` mantem ordem mobile imagem antes do texto; a inversao `image-right` continua restrita ao desktop `lg`.
+- `Cards` usa cards de altura natural, com altura cheia no grid e link alinhado ao fim quando houver conteudo irregular.
+- `Card` ganhou opcoes fechadas de padding, altura cheia e estado interativo para evitar classes arbitrarias nos Blocks.
+- `CTA` passou a usar densidade visual por variante: `brand` e `default` mais destacados, `compact` mais contida.
+
+### Escopo nao implementado nesta spec
+
+- Novos campos de CTA secundario.
+- Novos Blocks.
+- Variante visual adicional para Cards.
+- Animacoes ou motion system.
+- Ajustes visuais por pagina.
+
+## SPEC-017 - CMS Editing UX
+
+A SPEC-017 melhora a experiencia de edicao no Payload sem alterar a arquitetura fundamental do CMS.
+
+### Decisoes registradas
+
+- `Pages` ganhou textos de ajuda para titulo, endereco da pagina, blocos de conteudo e SEO.
+- A listagem de `Pages` continua usando `title`, `slug`, `_status` e `updatedAt`; preview continua apontando para `/api/draft`.
+- `Media` passou a orientar o uso de texto alternativo e legenda.
+- `Header` e `Footer` receberam descricoes editoriais para navegacao, logo, contatos e links institucionais.
+- `SiteSettings` recebeu descricoes para prazo, links oficiais, SEO padrao e cores institucionais.
+- `Branding` foi renomeado visualmente para `Cores institucionais` e deixa claro que o CMS nao aceita CSS livre.
+- Campos de link passaram a usar labels editoriais: `Texto do link`, `Destino do link`, `Pagina interna` e `URL externa`.
+- Variantes dos Blocks passaram a usar labels orientados ao editor, como `Modelo de apresentacao`, `Modelo de leitura`, `Posicao da imagem no desktop` e `Modelo de chamada`.
+- `Hero.image` permanece condicionado ao modelo `split`.
+- `Cards` continua sem variante, evitando flexibilidade visual perigosa.
+
+### Checkpoint final do ciclo
+
+- Tokens: existe fonte unica em `src/styles/tokens.css`; cores semanticas estao centralizadas; nao ha hex espalhado em Blocks/componentes.
+- Theme: branding pode ser alterado pelo CMS, possui fallback e nao controla CSS arbitrario.
+- Primitives: `Container`, `Section`, tipografia, `Button` e `Card` estao centralizados.
+- Blocks: usam primitives, tokens, variantes controladas quando existem, conteudo real e comportamento mobile.
+- CMS: criar Page, escolher variante, editar branding e usar Preview permanecem compreensiveis no schema.
+
+### Perguntas obrigatorias de revisao
+
+- Uma mudanca de `primaryColor` exige editar componentes? Nao.
+- O ADM consegue escolher uma cor aleatoria para cada Card? Nao.
+- O ADM consegue escolher entre layouts de Hero previamente aprovados? Sim.
+- Um novo Block precisa inventar seu proprio botao? Nao.
+- Um novo Block precisa inventar seu proprio container? Nao.
+- Os Blocks continuam funcionais sem configuracao de Theme? Sim, por meio dos defaults.
+- Alterar a identidade visual exige reescrever todas as paginas? Nao.
+
+### Escopo nao implementado nesta spec
+
+- Editor drag-and-drop customizado.
+- Page builder completo.
+- Edicao inline do frontend.
+- Live Preview avancado.
+- Multiplos temas por pagina.
+- CSS customizado.
+- Permissoes complexas por campo.
+- Regras de dominio especificas do portal.
+
 ## SPEC-005 - Drafts, Preview e Publishing
 
 A SPEC-005 separa edicao editorial de publicacao usando drafts nativos do Payload e Draft Mode do Next.js.

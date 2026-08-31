@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { Button, Container, Heading, Section, Text } from "./index";
+import { Button, Card, Container, Heading, Section, Text } from "./index";
 
 describe("ui primitives", () => {
   it("Container centralizes width and lateral spacing", () => {
@@ -57,5 +57,20 @@ describe("ui primitives", () => {
     assert.equal(button.type, "button");
     assert.equal(button.props.type, "submit");
     assert.match(button.props.className, /border-border/);
+  });
+
+  it("Card exposes closed visual density and interaction states", () => {
+    const element = Card({
+      children: "card",
+      fullHeight: true,
+      interactive: true,
+      padding: "lg",
+      tone: "surface",
+    });
+
+    assert.equal(element.type, "div");
+    assert.match(element.props.className, /p-8/);
+    assert.match(element.props.className, /h-full/);
+    assert.match(element.props.className, /hover:border-primary/);
   });
 });

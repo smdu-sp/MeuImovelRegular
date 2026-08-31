@@ -115,10 +115,38 @@ body {
 
 .cms-rich-text {
   color: var(--color-text);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
 }
 
-.cms-rich-text :where(h1, h2, h3, h4, h5, h6, strong) {
+.cms-rich-text :where(h1, h2, h3, h4, h5, h6) {
   color: var(--color-heading);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  margin-block: var(--space-8) var(--space-4);
+  text-wrap: balance;
+}
+
+.cms-rich-text :where(h1) {
+  font-size: var(--font-size-4xl);
+}
+
+.cms-rich-text :where(h2) {
+  font-size: var(--font-size-3xl);
+}
+
+.cms-rich-text :where(h3) {
+  font-size: var(--font-size-2xl);
+}
+
+.cms-rich-text :where(h4, h5, h6) {
+  font-size: var(--font-size-xl);
+}
+
+.cms-rich-text :where(strong) {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-bold);
 }
 
 .cms-rich-text :where(a) {
@@ -128,6 +156,71 @@ body {
   text-underline-offset: 0.2em;
 }
 
-.cms-rich-text :where(p, ul, ol, blockquote) {
+.cms-rich-text :where(a:hover) {
+  color: var(--color-primary-hover);
+}
+
+.cms-rich-text :where(p, ul, ol, blockquote, table) {
   margin-block: var(--space-4);
+}
+
+.cms-rich-text :where(ul, ol) {
+  padding-inline-start: var(--space-6);
+}
+
+.cms-rich-text :where(ul) {
+  list-style: disc;
+}
+
+.cms-rich-text :where(ol) {
+  list-style: decimal;
+}
+
+.cms-rich-text :where(li) {
+  margin-block: var(--space-2);
+  padding-inline-start: var(--space-1);
+}
+
+.cms-rich-text :where(blockquote) {
+  border-inline-start: var(--space-1) solid var(--color-border);
+  color: var(--color-text-muted);
+  padding-inline-start: var(--space-5);
+}
+
+.cms-rich-text :where(img) {
+  border-radius: var(--radius-lg);
+  height: auto;
+  max-width: 100%;
+}
+
+.cms-rich-text :where(table) {
+  border-collapse: collapse;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.cms-rich-text :where(th, td) {
+  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+  text-align: start;
+  vertical-align: top;
+}
+
+.cms-rich-text :where(th) {
+  background: var(--color-surface-muted);
+  color: var(--color-heading);
+  font-weight: var(--font-weight-semibold);
+}
+
+.cms-rich-text > :first-child {
+  margin-block-start: 0;
+}
+
+.cms-rich-text > :last-child {
+  margin-block-end: 0;
+}
+
+.cms-rich-text--wide {
+  column-gap: var(--space-10);
 }
