@@ -3,9 +3,20 @@ import { Card, Container, Heading, Section, Text } from "../../components/ui";
 import { MediaImage } from "../shared/MediaImage";
 import { BlockLink } from "../shared/BlockLink";
 
-export function CardsBlock({ description, items, title }: CardsBlockProps) {
+type CardsVariant = "default" | "modalities";
+
+export function normalizeCardsVariant(
+  variant: CardsBlockProps["variant"] | string | null | undefined,
+): CardsVariant {
+  return variant === "modalities" ? "modalities" : "default";
+}
+
+export function CardsBlock({ description, items, title, variant }: CardsBlockProps) {
+  const normalizedVariant = normalizeCardsVariant(variant);
+  const modalities = normalizedVariant === "modalities";
+
   return (
-    <Section spacing="md" tone="muted">
+    <Section spacing="md" tone={modalities ? "default" : "muted"}>
       <Container size="lg">
         {title ? (
           <Heading level={2} size="lg">
@@ -20,9 +31,9 @@ export function CardsBlock({ description, items, title }: CardsBlockProps) {
         <ul className="mt-8 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <li key={item.id}>
-              <Card fullHeight interactive>
+              <Card fullHeight interactive padding={modalities ? "lg" : "md"}>
                 <MediaImage
-                  className="mb-5 h-12 w-12 shrink-0 object-contain"
+                  className={`${modalities ? "mb-6 h-14 w-14" : "mb-5 h-12 w-12"} shrink-0 object-contain`}
                   media={item.icon}
                 />
                 <Heading level={3} size="md">

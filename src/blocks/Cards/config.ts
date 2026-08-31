@@ -28,6 +28,21 @@ export const CardsBlock: Block = {
       },
     },
     {
+      name: "variant",
+      type: "select",
+      label: "Modelo da lista",
+      required: true,
+      defaultValue: "default",
+      admin: {
+        description:
+          "Padrao cobre listas editoriais gerais; modalidades destaca opcoes de regularizacao sem criar outro tipo de bloco.",
+      },
+      options: [
+        { label: "Padrao", value: "default" },
+        { label: "Modalidades", value: "modalities" },
+      ],
+    },
+    {
       name: "items",
       type: "array",
       label: "Itens",

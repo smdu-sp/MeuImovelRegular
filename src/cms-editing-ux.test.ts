@@ -103,14 +103,34 @@ describe("CMS editing UX", () => {
     assert.match(adminDescription(alt) ?? "", /leitores de tela/);
   });
 
-  it("keeps Cards understandable without adding unsafe layout variants", () => {
+  it("keeps Cards variants closed and editor-facing", () => {
     const items = fieldByName(CardsBlock.fields, "items");
-    const variant = CardsBlock.fields.find(
-      (field) => "name" in field && field.name === "variant",
-    );
+    const variant = fieldByName(CardsBlock.fields, "variant");
+    const options = "options" in variant ? variant.options : [];
+    const values = Array.isArray(options)
+      ? options.map((option) => typeof option === "object" && "value" in option ? option.value : option)
+      : [];
 
     assert.equal(CardsBlock.labels?.singular, "Lista de cards");
-    assert.equal(variant, undefined);
+    assert.deepEqual(values, ["default", "modalities"]);
+    assert.match(adminDescription(variant) ?? "", /modalidades/);
     assert.match(adminDescription(items) ?? "", /1 a 12 cards/);
+  });
+
+  it("keeps Cards free of arbitrary layout variants", () => {
+    const variant = fieldByName(CardsBlock.fields, "variant");
+    const options = "options" in variant ? variant.options : [];
+    const values = Array.isArray(options)
+      ? options.map((option) => typeof option === "object" && "value" in option ? option.value : option)
+      : [];
+
+    assert.equal(
+      CardsBlock.fields.find(
+      (field) => "name" in field && field.name === "variant",
+      ),
+      variant,
+    );
+    assert.equal(values.includes("custom"), false);
+    assert.equal(values.includes("layout"), false);
   });
 });

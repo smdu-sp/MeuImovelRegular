@@ -168,12 +168,12 @@ Não criar Blocks, modificar schema de `Pages`, implementar countdown real, adic
 
 ## 7. Critérios de aceite
 
-- [ ] todos os 12 padrões têm decisão explícita;
-- [ ] Header/Footer estão classificados como globais/estruturais;
-- [ ] RichText, ImageText, CTA e Cards foram avaliados antes de duplicação;
-- [ ] backlog da SPEC-019 está definido;
-- [ ] `component-audit.md` existe;
-- [ ] `block-catalog.md` existe;
-- [ ] nenhuma feature foi implementada nesta Spec.
+- [x] todos os 12 padrões têm decisão explícita;
+- [x] Header/Footer estão classificados como globais/estruturais;
+- [x] RichText, ImageText, CTA e Cards foram avaliados antes de duplicação;
+- [x] backlog da SPEC-019 está definido;
+- [x] `component-audit.md` existe;
+- [x] `block-catalog.md` existe;
+- [x] nenhuma feature foi implementada nesta Spec.
 
 ---

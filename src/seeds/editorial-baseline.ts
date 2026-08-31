@@ -120,6 +120,7 @@ const homeSeed = (links: {
       title: "Orientacao inicial",
       description:
         "Acesse os principais caminhos editoriais para entender o tema antes da triagem.",
+      variant: "default",
       items: [
         {
           title: "Entenda a lei",

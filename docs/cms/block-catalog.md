@@ -1,0 +1,54 @@
+# Catalogo atual de Blocks e Globals
+
+Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele deve ser usado antes de propor novos Blocks, variants ou primitives.
+
+## Blocks registrados em Pages
+
+`src/collections/Pages.ts` registra nove Blocks no campo `layout`: `hero`, `richText`, `imageText`, `cards`, `cta`, `iconGrid`, `faqAccordion`, `alertBox` e `actionBanners`. A renderizacao publica passa por `src/components/RenderBlocks/index.tsx`.
+
+| Block atual | Schema | Component | Variants | Uso |
+|---|---|---|---|---|
+| Hero | `src/blocks/Hero/config.ts` | `src/blocks/Hero/Component.tsx` | `default`, `centered`, `split`; fallback legado `image` para `split` | Abertura editorial de pagina com chamada superior, titulo, resumo, imagem opcional e acao principal. |
+| RichText | `src/blocks/RichText/config.ts` | `src/blocks/RichText/Component.tsx` | `default`, `narrow`; fallbacks legados `content` e `wide` | Conteudo editorial livre com Lexical, adequado para introducoes, explicacoes e textos institucionais. |
+| ImageText | `src/blocks/ImageText/config.ts` | `src/blocks/ImageText/Component.tsx` | `image-left`, `image-right`; fallbacks legados `left` e `right` | Secoes de duas colunas com midia, titulo, rich text e acao complementar opcional. |
+| Cards | `src/blocks/Cards/config.ts` | `src/blocks/Cards/Component.tsx` | `default`, `modalities` | Listas editoriais em grade com titulo, resumo, itens, icone, descricao e link opcional; a variant `modalities` cobre modalidades sem duplicar Block. |
+| CTA | `src/blocks/CTA/config.ts` | `src/blocks/CTA/Component.tsx` | `default`, `brand`, `compact`; fallback legado `primary` para `brand` | Chamadas de acao pontuais ou finais com titulo, descricao e link obrigatorio. |
+| Icon Grid | `src/blocks/IconGrid/config.ts` | `src/blocks/IconGrid/Component.tsx` | `default`, `compact` | Grade compacta de itens com icone, texto curto e link opcional, priorizada para paginas de modalidades. |
+| FAQ / Accordion | `src/blocks/FAQ/config.ts` | `src/blocks/FAQ/Component.tsx` | `default`, `compact` | Lista acessivel de perguntas e respostas com rich text, renderizada com `details` e `summary`. |
+| Alert Box | `src/blocks/AlertBox/config.ts` | `src/blocks/AlertBox/Component.tsx` | `info`, `warning` | Aviso editorial com tom controlado pelo Design System, rich text e link opcional. |
+| Action Banners | `src/blocks/ActionBanners/config.ts` | `src/blocks/ActionBanners/Component.tsx` | `grid`, `stacked`; aparencias `primary`, `brand`, `accent` | Conjunto reordenavel de faixas de acao, sem cores livres no CMS. |
+
+## Globals e estruturas globais
+
+| Estrutura | Schema | Responsabilidade atual | Observacao |
+|---|---|---|---|
+| Header | `src/globals/Header.ts` | Logo opcional e navegacao principal para paginas internas. | Deve permanecer fora de `Pages.layout`; e componente estrutural do layout. |
+| Footer | `src/globals/Footer.ts` | Telefone, e-mail, atendimento presencial e links institucionais. | Deve permanecer fora de `Pages.layout`; conteudo sujeito a alteracao fica no CMS. |
+| SiteSettings | `src/globals/SiteSettings.ts` | Nome do site, prazo institucional, links oficiais, branding controlado e SEO padrao. | Fonte configuravel para valores institucionais e tokens autorizados. |
+
+## Primitives e helpers relevantes
+
+| Item | Caminho | Papel |
+|---|---|---|
+| `Section` | `src/components/ui/Section.tsx` | Espacamento vertical e tons de fundo aprovados pelo Design System. |
+| `Container` | `src/components/ui/Container.tsx` | Larguras maximas consistentes por contexto editorial. |
+| `Card` | `src/components/ui/Card.tsx` | Superficie reutilizavel para itens repetidos e CTAs enquadrados. |
+| `Heading` e `Text` | `src/components/ui/Heading.tsx`, `src/components/ui/Text.tsx` | Tipografia padronizada. |
+| `Button` | `src/components/ui/Button.tsx` | Aparencias e tamanhos de acao. |
+| `BlockLink` | `src/blocks/shared/BlockLink.tsx` | Renderizacao unica de links internos e externos dos Blocks. |
+| `MediaImage` | `src/blocks/shared/MediaImage.tsx` | Renderizacao de uploads de midia do Payload. |
+
+## Regras de uso
+
+- Avaliar `RichText`, `ImageText`, `CTA` e `Cards` antes de criar qualquer novo Block editorial.
+- Criar `variant` quando a intencao editorial for a mesma e a diferenca for principalmente apresentacao.
+- Criar novo Block quando o schema precisar expressar uma semantica propria, como pergunta/resposta, aviso, prazo ou grade compacta de icones.
+- Manter Header, Footer e SiteSettings como Globals ou composicao de layout, nao como Blocks de pagina.
+- Nao introduzir CSS livre no CMS; variantes devem continuar restritas ao Design System.
+
+## Decisoes da SPEC-019
+
+- Implementados: `iconGrid`, `faqAccordion`, `alertBox`, `actionBanners`.
+- Evoluido: `cards` recebeu a variant `modalities` para evitar um `ModalitiesCards` duplicado.
+- Mantidos para specs futuras: `heroCountdown`, `mediaHighlight`, `steps` e a evolucao eventual de Benefits Grid.
+- Nao foram implementados relogio, prazo, timezone, regras juridicas ou novos fluxos editoriais fora do lote priorizado.

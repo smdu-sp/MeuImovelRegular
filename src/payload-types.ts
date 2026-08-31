@@ -199,7 +199,19 @@ export interface Page {
   /**
    * Monte a pagina escolhendo blocos prontos. Cada bloco possui opcoes controladas pelo Design System.
    */
-  layout?: (HeroBlock | RichTextBlock | ImageTextBlock | CardsBlock | CTABlock)[] | null;
+  layout?:
+    | (
+        | HeroBlock
+        | RichTextBlock
+        | ImageTextBlock
+        | CardsBlock
+        | CTABlock
+        | IconGridBlock
+        | FAQAccordionBlock
+        | AlertBoxBlock
+        | ActionBannersBlock
+      )[]
+    | null;
   /**
    * Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.
    */
@@ -384,6 +396,10 @@ export interface CardsBlock {
    */
   description?: string | null;
   /**
+   * Padrao cobre listas editoriais gerais; modalidades destaca opcoes de regularizacao sem criar outro tipo de bloco.
+   */
+  variant: 'default' | 'modalities';
+  /**
    * Adicione de 1 a 12 cards. O layout ajusta a quantidade de colunas conforme a largura da tela.
    */
   items: {
@@ -475,6 +491,232 @@ export interface CTABlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconGridBlock".
+ */
+export interface IconGridBlock {
+  /**
+   * Titulo curto que contextualiza o conjunto de itens com icones.
+   */
+  title: string;
+  /**
+   * Texto opcional para orientar a leitura antes da grade.
+   */
+  description?: string | null;
+  /**
+   * Padrao destaca descricoes; compacto favorece listas mais densas.
+   */
+  variant: 'default' | 'compact';
+  /**
+   * Adicione itens curtos com icone. Reordene conforme a prioridade editorial.
+   */
+  items: {
+    /**
+     * Opcional. Use imagens simples e com texto alternativo adequado.
+     */
+    icon?: (number | null) | Media;
+    /**
+     * Texto curto exibido junto ao icone. Evite paragrafos longos.
+     */
+    description: string;
+    /**
+     * Opcional. Use apenas quando o item encaminhar para detalhe ou servico.
+     */
+    link?: {
+      /**
+       * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+       */
+      label?: string | null;
+      /**
+       * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+       */
+      type?: ('internal' | 'external') | null;
+      /**
+       * Pagina publicada ou em rascunho dentro deste CMS.
+       */
+      page?: (number | null) | Page;
+      /**
+       * Informe o endereco completo, incluindo http:// ou https://.
+       */
+      url?: string | null;
+      /**
+       * Recomendado para links externos, mantendo o portal aberto na aba atual.
+       */
+      newTab?: boolean | null;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQAccordionBlock".
+ */
+export interface FAQAccordionBlock {
+  /**
+   * Titulo exibido antes da lista de perguntas.
+   */
+  title: string;
+  /**
+   * Texto opcional para contextualizar as perguntas.
+   */
+  description?: string | null;
+  /**
+   * Padrao usa mais espacamento; compacto favorece paginas densas.
+   */
+  variant: 'default' | 'compact';
+  /**
+   * Cada item vira uma linha expansivel acessivel por teclado.
+   */
+  items: {
+    /**
+     * Pergunta clara e direta exibida no acordeao.
+     */
+    question: string;
+    /**
+     * Resposta editorial. Use links somente para canais oficiais ou paginas do portal.
+     */
+    answer: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqAccordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AlertBoxBlock".
+ */
+export interface AlertBoxBlock {
+  /**
+   * Opcional. Use quando o aviso precisar de uma chamada curta.
+   */
+  title?: string | null;
+  /**
+   * Texto do aviso. Mantenha linguagem orientativa e evite conclusoes definitivas.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Define apenas o tom visual do aviso dentro do Design System.
+   */
+  type: 'info' | 'warning';
+  /**
+   * Opcional. Use para encaminhar o usuario a uma pagina ou servico oficial.
+   */
+  link?: {
+    /**
+     * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+     */
+    label?: string | null;
+    /**
+     * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+     */
+    type?: ('internal' | 'external') | null;
+    /**
+     * Pagina publicada ou em rascunho dentro deste CMS.
+     */
+    page?: (number | null) | Page;
+    /**
+     * Informe o endereco completo, incluindo http:// ou https://.
+     */
+    url?: string | null;
+    /**
+     * Recomendado para links externos, mantendo o portal aberto na aba atual.
+     */
+    newTab?: boolean | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'alertBox';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ActionBannersBlock".
+ */
+export interface ActionBannersBlock {
+  /**
+   * Opcional. Use quando o conjunto de faixas precisar de contexto.
+   */
+  title?: string | null;
+  /**
+   * Grade mostra faixas lado a lado; empilhado favorece chamadas longas.
+   */
+  variant: 'grid' | 'stacked';
+  /**
+   * Cada faixa deve ter uma acao clara e um tom escolhido do Design System.
+   */
+  banners: {
+    /**
+     * Mensagem curta da faixa de acao.
+     */
+    title: string;
+    /**
+     * Opcional. Use para explicar a acao antes do botao.
+     */
+    description?: string | null;
+    /**
+     * Mapeia a faixa para tokens do Design System, sem cores livres.
+     */
+    appearance: 'primary' | 'brand' | 'accent';
+    button: {
+      /**
+       * Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.
+       */
+      label: string;
+      /**
+       * Escolha pagina interna para navegar no portal ou URL externa para encaminhar a servico oficial.
+       */
+      type: 'internal' | 'external';
+      /**
+       * Pagina publicada ou em rascunho dentro deste CMS.
+       */
+      page?: (number | null) | Page;
+      /**
+       * Informe o endereco completo, incluindo http:// ou https://.
+       */
+      url?: string | null;
+      /**
+       * Recomendado para links externos, mantendo o portal aberto na aba atual.
+       */
+      newTab?: boolean | null;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'actionBanners';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -610,6 +852,10 @@ export interface PagesSelect<T extends boolean = true> {
         imageText?: T | ImageTextBlockSelect<T>;
         cards?: T | CardsBlockSelect<T>;
         cta?: T | CTABlockSelect<T>;
+        iconGrid?: T | IconGridBlockSelect<T>;
+        faqAccordion?: T | FAQAccordionBlockSelect<T>;
+        alertBox?: T | AlertBoxBlockSelect<T>;
+        actionBanners?: T | ActionBannersBlockSelect<T>;
       };
   seo?:
     | T
@@ -682,6 +928,7 @@ export interface ImageTextBlockSelect<T extends boolean = true> {
 export interface CardsBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  variant?: T;
   items?:
     | T
     | {
@@ -719,6 +966,98 @@ export interface CTABlockSelect<T extends boolean = true> {
         newTab?: T;
       };
   variant?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconGridBlock_select".
+ */
+export interface IconGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  variant?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        description?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              page?: T;
+              url?: T;
+              newTab?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQAccordionBlock_select".
+ */
+export interface FAQAccordionBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  variant?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AlertBoxBlock_select".
+ */
+export interface AlertBoxBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  type?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        page?: T;
+        url?: T;
+        newTab?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ActionBannersBlock_select".
+ */
+export interface ActionBannersBlockSelect<T extends boolean = true> {
+  title?: T;
+  variant?: T;
+  banners?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        appearance?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              page?: T;
+              url?: T;
+              newTab?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

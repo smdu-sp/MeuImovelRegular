@@ -1,8 +1,16 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import {
+  normalizeActionBannerAppearance,
+  normalizeActionBannersVariant,
+} from "./ActionBanners/Component";
+import { normalizeAlertBoxType } from "./AlertBox/Component";
 import { normalizeCTAVariant } from "./CTA/Component";
+import { normalizeCardsVariant } from "./Cards/Component";
+import { normalizeFAQVariant } from "./FAQ/Component";
 import { normalizeHeroVariant } from "./Hero/Component";
+import { normalizeIconGridVariant } from "./IconGrid/Component";
 import { normalizeImageTextVariant } from "./ImageText/Component";
 import { normalizeRichTextVariant } from "./RichText/Component";
 
@@ -39,5 +47,33 @@ describe("block variant fallbacks", () => {
     assert.equal(normalizeRichTextVariant("content"), "narrow");
     assert.equal(normalizeRichTextVariant("wide"), "default");
     assert.equal(normalizeRichTextVariant("unknown"), "default");
+  });
+
+  it("keeps Cards variants and falls back to the general card list", () => {
+    assert.equal(normalizeCardsVariant("default"), "default");
+    assert.equal(normalizeCardsVariant("modalities"), "modalities");
+    assert.equal(normalizeCardsVariant("unknown"), "default");
+  });
+
+  it("normalizes newly added structural block variants", () => {
+    assert.equal(normalizeIconGridVariant("default"), "default");
+    assert.equal(normalizeIconGridVariant("compact"), "compact");
+    assert.equal(normalizeIconGridVariant("unknown"), "default");
+    assert.equal(normalizeFAQVariant("default"), "default");
+    assert.equal(normalizeFAQVariant("compact"), "compact");
+    assert.equal(normalizeFAQVariant("unknown"), "default");
+    assert.equal(normalizeAlertBoxType("info"), "info");
+    assert.equal(normalizeAlertBoxType("warning"), "warning");
+    assert.equal(normalizeAlertBoxType("unknown"), "info");
+  });
+
+  it("normalizes Action Banners variants and token-based appearances", () => {
+    assert.equal(normalizeActionBannersVariant("grid"), "grid");
+    assert.equal(normalizeActionBannersVariant("stacked"), "stacked");
+    assert.equal(normalizeActionBannersVariant("unknown"), "grid");
+    assert.equal(normalizeActionBannerAppearance("primary"), "primary");
+    assert.equal(normalizeActionBannerAppearance("brand"), "brand");
+    assert.equal(normalizeActionBannerAppearance("accent"), "accent");
+    assert.equal(normalizeActionBannerAppearance("yellow"), "primary");
   });
 });

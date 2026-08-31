@@ -1,7 +1,11 @@
 import type { Page } from "../../payload-types";
+import { ActionBannersBlock } from "../../blocks/ActionBanners/Component";
+import { AlertBoxBlock } from "../../blocks/AlertBox/Component";
 import { CardsBlock } from "../../blocks/Cards/Component";
 import { CTABlock } from "../../blocks/CTA/Component";
+import { FAQAccordionBlock } from "../../blocks/FAQ/Component";
 import { HeroBlock } from "../../blocks/Hero/Component";
+import { IconGridBlock } from "../../blocks/IconGrid/Component";
 import { ImageTextBlock } from "../../blocks/ImageText/Component";
 import { RichTextBlock } from "../../blocks/RichText/Component";
 
@@ -24,6 +28,14 @@ export function RenderBlocks({ blocks }: { blocks?: Page["layout"] | null }) {
         return <CardsBlock {...block} key={key} />;
       case "cta":
         return <CTABlock {...block} key={key} />;
+      case "iconGrid":
+        return <IconGridBlock {...block} key={key} />;
+      case "faqAccordion":
+        return <FAQAccordionBlock {...block} key={key} />;
+      case "alertBox":
+        return <AlertBoxBlock {...block} key={key} />;
+      case "actionBanners":
+        return <ActionBannersBlock {...block} key={key} />;
       default:
         return null;
     }
