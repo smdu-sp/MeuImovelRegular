@@ -330,8 +330,10 @@ await payload.updateGlobal({
   data: {
     phone: "",
     email: "",
+    address: "Rua Sao Bento, 405",
     inPersonService:
       "Atendimento presencial e canais oficiais devem ser configurados pelo administrador.",
+    socialLinks: [],
     institutionalLinks: [
       {
         label: "Portal de Licenciamento",

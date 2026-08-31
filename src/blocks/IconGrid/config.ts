@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import { createLinkFields } from "../shared/link";
+import { createLinkFields } from "../../fields/link";
 
 export const IconGridBlock: Block = {
   slug: "iconGrid",

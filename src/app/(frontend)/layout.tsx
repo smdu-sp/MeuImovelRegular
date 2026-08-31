@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import type { ReactNode } from "react";
+import { getSiteSettings } from "../../lib/payload/get-page";
 import { getTheme } from "../../lib/theme/get-theme";
 import { mapThemeToCssVariables } from "../../lib/theme/map-theme-to-css-variables";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Meu Imovel Regular",
-  description: "Regularizacao imobiliaria com informacao clara e acessivel.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await getSiteSettings();
+
+  return {
+    title:
+      siteSettings?.defaultSEO?.title ||
+      siteSettings?.siteName ||
+      "Meu Imovel Regular",
+    description: siteSettings?.defaultSEO?.description || undefined,
+  };
+}
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const theme = await getTheme();

@@ -202,14 +202,14 @@ Comparar primeiro com CTA existente.
 
 ## 7. Critérios de aceite
 
-- [ ] somente itens aprovados foram implementados;
-- [ ] não existem duplicações semânticas evitáveis;
-- [ ] Blocks usam Design System;
-- [ ] Action Banners não possuem cores hardcoded;
-- [ ] FAQ é acessível;
-- [ ] Hero Countdown não introduziu lógica de prazo;
-- [ ] conteúdo antigo continua funcionando;
-- [ ] catálogo foi atualizado;
-- [ ] build passa.
+- [x] somente itens aprovados foram implementados;
+- [x] não existem duplicações semânticas evitáveis;
+- [x] Blocks usam Design System;
+- [x] Action Banners não possuem cores hardcoded;
+- [x] FAQ é acessível;
+- [x] Hero Countdown não introduziu lógica de prazo;
+- [x] conteúdo antigo continua funcionando;
+- [x] catálogo foi atualizado;
+- [x] build passa.
 
 ---

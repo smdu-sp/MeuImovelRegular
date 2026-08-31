@@ -1,29 +1,10 @@
 import Link from "next/link";
-import type { Page } from "../../payload-types";
-import { pageSlugToPath } from "../../domain/slug";
 import { Button, type ButtonSize, type ButtonVariant } from "../../components/ui";
+import { resolveLink, type NavigationLink } from "../../lib/navigation/resolve-link";
 
-export type LinkValue = {
-  label?: string | null;
-  type?: "internal" | "external" | null;
-  page?: number | Page | null;
-  url?: string | null;
-  newTab?: boolean | null;
-};
+export type LinkValue = NavigationLink;
 
 type BlockLinkAppearance = "text" | ButtonVariant;
-
-const getHref = (link: LinkValue): string | null => {
-  if (link.type === "external") {
-    return link.url || null;
-  }
-
-  if (link.page && typeof link.page === "object") {
-    return pageSlugToPath(link.page.slug);
-  }
-
-  return null;
-};
 
 export function BlockLink({
   appearance = "text",
@@ -34,18 +15,19 @@ export function BlockLink({
   link?: LinkValue | null;
   size?: ButtonSize;
 }) {
-  if (!link?.label) return null;
-
-  const href = getHref(link);
-  if (!href) return null;
-
-  const target = link.newTab ? "_blank" : undefined;
-  const rel = link.newTab ? "noopener noreferrer" : undefined;
+  const resolvedLink = resolveLink(link);
+  if (!resolvedLink) return null;
 
   if (appearance !== "text") {
     return (
-      <Button href={href} rel={rel} size={size} target={target} variant={appearance}>
-        {link.label}
+      <Button
+        href={resolvedLink.href}
+        rel={resolvedLink.rel}
+        size={size}
+        target={resolvedLink.target}
+        variant={appearance}
+      >
+        {resolvedLink.label}
       </Button>
     );
   }
@@ -53,11 +35,11 @@ export function BlockLink({
   return (
     <Link
       className="font-semibold text-link underline decoration-2 underline-offset-4"
-      href={href}
-      rel={rel}
-      target={target}
+      href={resolvedLink.href}
+      rel={resolvedLink.rel}
+      target={resolvedLink.target}
     >
-      {link.label}
+      {resolvedLink.label}
     </Link>
   );
 }

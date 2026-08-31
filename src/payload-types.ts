@@ -267,7 +267,7 @@ export interface HeroBlock {
      */
     type?: ('internal' | 'external') | null;
     /**
-     * Pagina publicada ou em rascunho dentro deste CMS.
+     * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
      */
     page?: (number | null) | Page;
     /**
@@ -366,7 +366,7 @@ export interface ImageTextBlock {
      */
     type?: ('internal' | 'external') | null;
     /**
-     * Pagina publicada ou em rascunho dentro deste CMS.
+     * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
      */
     page?: (number | null) | Page;
     /**
@@ -428,7 +428,7 @@ export interface CardsBlock {
        */
       type?: ('internal' | 'external') | null;
       /**
-       * Pagina publicada ou em rascunho dentro deste CMS.
+       * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
        */
       page?: (number | null) | Page;
       /**
@@ -472,7 +472,7 @@ export interface CTABlock {
      */
     type: 'internal' | 'external';
     /**
-     * Pagina publicada ou em rascunho dentro deste CMS.
+     * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
      */
     page?: (number | null) | Page;
     /**
@@ -534,7 +534,7 @@ export interface IconGridBlock {
        */
       type?: ('internal' | 'external') | null;
       /**
-       * Pagina publicada ou em rascunho dentro deste CMS.
+       * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
        */
       page?: (number | null) | Page;
       /**
@@ -645,7 +645,7 @@ export interface AlertBoxBlock {
      */
     type?: ('internal' | 'external') | null;
     /**
-     * Pagina publicada ou em rascunho dentro deste CMS.
+     * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
      */
     page?: (number | null) | Page;
     /**
@@ -700,7 +700,7 @@ export interface ActionBannersBlock {
        */
       type: 'internal' | 'external';
       /**
-       * Pagina publicada ou em rascunho dentro deste CMS.
+       * Pagina publicada ou em rascunho dentro deste CMS. Mudancas de slug nao quebram este relacionamento.
        */
       page?: (number | null) | Page;
       /**
@@ -1123,7 +1123,7 @@ export interface Header {
          */
         label: string;
         /**
-         * Pagina de destino dentro do portal.
+         * Pagina de destino dentro do portal. Mudancas de slug nao quebram este relacionamento.
          */
         page: number | Page;
         id?: string | null;
@@ -1149,9 +1149,29 @@ export interface Footer {
    */
   email?: string | null;
   /**
+   * Opcional. Informe endereco institucional vigente somente quando confirmado pelos canais oficiais.
+   */
+  address?: string | null;
+  /**
    * Texto livre para orientar sobre atendimento presencial ou informar que deve ser consultado nos canais oficiais.
    */
   inPersonService?: string | null;
+  /**
+   * Perfis oficiais exibidos no rodape. Mantenha somente canais institucionais ativos.
+   */
+  socialLinks?:
+    | {
+        /**
+         * Nome curto exibido para identificar o canal oficial, como Instagram ou YouTube.
+         */
+        label: string;
+        /**
+         * Endereco completo do perfil oficial, incluindo https://.
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * Links para servicos e paginas oficiais relacionados ao portal.
    */
@@ -1264,7 +1284,15 @@ export interface HeaderSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   phone?: T;
   email?: T;
+  address?: T;
   inPersonService?: T;
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
   institutionalLinks?:
     | T
     | {

@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { createSocialLinkFields } from "./shared/social-link.ts";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
@@ -27,6 +28,15 @@ export const Footer: GlobalConfig = {
       },
     },
     {
+      name: "address",
+      type: "textarea",
+      label: "Endereco fisico",
+      admin: {
+        description:
+          "Opcional. Informe endereco institucional vigente somente quando confirmado pelos canais oficiais.",
+      },
+    },
+    {
       name: "inPersonService",
       type: "textarea",
       label: "Atendimento presencial",
@@ -34,6 +44,17 @@ export const Footer: GlobalConfig = {
         description:
           "Texto livre para orientar sobre atendimento presencial ou informar que deve ser consultado nos canais oficiais.",
       },
+    },
+    {
+      name: "socialLinks",
+      type: "array",
+      label: "Redes sociais",
+      admin: {
+        description:
+          "Perfis oficiais exibidos no rodape. Mantenha somente canais institucionais ativos.",
+        initCollapsed: true,
+      },
+      fields: createSocialLinkFields(),
     },
     {
       name: "institutionalLinks",

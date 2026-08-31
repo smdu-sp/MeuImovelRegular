@@ -7,12 +7,13 @@ import { CTABlock } from "./blocks/CTA/config";
 import { HeroBlock } from "./blocks/Hero/config";
 import { ImageTextBlock } from "./blocks/ImageText/config";
 import { RichTextBlock } from "./blocks/RichText/config";
-import { createLinkFields } from "./blocks/shared/link";
 import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
+import { createLinkFields } from "./fields/link";
 import { Footer } from "./globals/Footer";
 import { Header } from "./globals/Header";
 import { SiteSettings } from "./globals/SiteSettings";
+import { createSocialLinkFields } from "./globals/shared/social-link";
 
 type FieldLike = Field & {
   admin?: {
@@ -101,6 +102,47 @@ describe("CMS editing UX", () => {
     assert.equal(branding.label, "Cores institucionais");
     assert.match(adminDescription(branding) ?? "", /CSS livre/);
     assert.match(adminDescription(alt) ?? "", /leitores de tela/);
+  });
+
+  it("keeps reusable Footer content configurable in Globals", () => {
+    const phone = fieldByName(Footer.fields, "phone");
+    const email = fieldByName(Footer.fields, "email");
+    const address = fieldByName(Footer.fields, "address");
+    const socialLinks = fieldByName(Footer.fields, "socialLinks");
+    const institutionalLinks = fieldByName(Footer.fields, "institutionalLinks");
+
+    assert.equal(phone.label, "Telefone");
+    assert.equal(email.label, "E-mail");
+    assert.equal(address.label, "Endereco fisico");
+    assert.equal(socialLinks.label, "Redes sociais");
+    assert.equal(institutionalLinks.label, "Links institucionais");
+    assert.match(adminDescription(address) ?? "", /canais oficiais/);
+    assert.match(adminDescription(socialLinks) ?? "", /institucionais ativos/);
+  });
+
+  it("keeps Global links compatible with existing Payload tables", () => {
+    const navigation = fieldByName(Header.fields, "navigation");
+    const institutionalLinks = fieldByName(Footer.fields, "institutionalLinks");
+    const officialLinks = fieldByName(SiteSettings.fields, "officialLinks");
+    const getNestedNames = (field: FieldLike): string[] =>
+      "fields" in field && Array.isArray(field.fields)
+        ? field.fields.map((nested) => "name" in nested ? String(nested.name) : "")
+        : [];
+
+    assert.deepEqual(getNestedNames(navigation), ["label", "page"]);
+    assert.deepEqual(getNestedNames(institutionalLinks), ["label", "url"]);
+    assert.deepEqual(getNestedNames(officialLinks), ["label", "url"]);
+  });
+
+  it("validates reusable social links without creating generic key value content", () => {
+    const fields = createSocialLinkFields();
+    const label = fieldByName(fields, "label");
+    const url = fieldByName(fields, "url");
+    const validate = "validate" in url ? url.validate : undefined;
+
+    assert.equal(label.label, "Nome da rede");
+    assert.equal(url.label, "URL oficial");
+    assert.equal(typeof validate, "function");
   });
 
   it("keeps Cards variants closed and editor-facing", () => {

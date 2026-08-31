@@ -23,7 +23,7 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 | Estrutura | Schema | Responsabilidade atual | Observacao |
 |---|---|---|---|
 | Header | `src/globals/Header.ts` | Logo opcional e navegacao principal para paginas internas. | Deve permanecer fora de `Pages.layout`; e componente estrutural do layout. |
-| Footer | `src/globals/Footer.ts` | Telefone, e-mail, atendimento presencial e links institucionais. | Deve permanecer fora de `Pages.layout`; conteudo sujeito a alteracao fica no CMS. |
+| Footer | `src/globals/Footer.ts` | Telefone, e-mail, endereco fisico, atendimento presencial, redes sociais e links institucionais. | Deve permanecer fora de `Pages.layout`; conteudo sujeito a alteracao fica no CMS. |
 | SiteSettings | `src/globals/SiteSettings.ts` | Nome do site, prazo institucional, links oficiais, branding controlado e SEO padrao. | Fonte configuravel para valores institucionais e tokens autorizados. |
 
 ## Primitives e helpers relevantes
@@ -36,7 +36,9 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 | `Heading` e `Text` | `src/components/ui/Heading.tsx`, `src/components/ui/Text.tsx` | Tipografia padronizada. |
 | `Button` | `src/components/ui/Button.tsx` | Aparencias e tamanhos de acao. |
 | `BlockLink` | `src/blocks/shared/BlockLink.tsx` | Renderizacao unica de links internos e externos dos Blocks. |
+| `createLinkFields` | `src/fields/link.ts` | Contrato unico para links internos/externos em Blocks com CTA. |
 | `MediaImage` | `src/blocks/shared/MediaImage.tsx` | Renderizacao de uploads de midia do Payload. |
+| `createSocialLinkFields` | `src/globals/shared/social-link.ts` | Campos reutilizaveis para redes sociais oficiais em Globals. |
 
 ## Regras de uso
 
@@ -52,3 +54,10 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 - Evoluido: `cards` recebeu a variant `modalities` para evitar um `ModalitiesCards` duplicado.
 - Mantidos para specs futuras: `heroCountdown`, `mediaHighlight`, `steps` e a evolucao eventual de Benefits Grid.
 - Nao foram implementados relogio, prazo, timezone, regras juridicas ou novos fluxos editoriais fora do lote priorizado.
+
+## Decisoes da SPEC-021
+
+- Centralizado: `createLinkFields` agora vive em `src/fields/link.ts`.
+- Centralizado: resolucao de href, target e rel vive em `src/lib/navigation/resolve-link.ts`.
+- Atualizados: Blocks com CTA usam o mesmo contrato de link; Header, Footer e SiteSettings mantem formatos compativeis com o banco atual e sao resolvidos pelo helper central.
+- Mantido: `src/blocks/shared/link.ts` reexporta o helper para compatibilidade interna.

@@ -41,10 +41,11 @@ export const Header: GlobalConfig = {
           name: "page",
           type: "relationship",
           relationTo: "pages",
-          label: "Página",
+          label: "Pagina",
           required: true,
           admin: {
-            description: "Pagina de destino dentro do portal.",
+            description:
+              "Pagina de destino dentro do portal. Mudancas de slug nao quebram este relacionamento.",
           },
         },
       ],
