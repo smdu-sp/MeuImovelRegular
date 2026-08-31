@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const siteSettings = await getSiteSettings();
 
-  return resolvePageMetadata(page, siteSettings);
+  return resolvePageMetadata(page, siteSettings, { draft: isEnabled });
 }
 
 export default async function Home() {

@@ -9,6 +9,7 @@ import { IconGridBlock } from "../blocks/IconGrid/config.ts";
 import { ImageTextBlock } from "../blocks/ImageText/config.ts";
 import { RichTextBlock } from "../blocks/RichText/config.ts";
 import { normalizePageSlug, validatePageSlug } from "../domain/slug.ts";
+import { createSeoFields } from "../fields/seo.ts";
 import { revalidatePage } from "../lib/payload/revalidate-page.ts";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -101,38 +102,12 @@ export const Pages: CollectionConfig = {
       label: "SEO e compartilhamento",
       admin: {
         description:
-          "Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.",
+          "Configure titulo, resumo, OpenGraph, robots e URL canonica para buscadores quando forem diferentes do conteudo principal.",
       },
-      fields: [
-        {
-          name: "title",
-          type: "text",
-          label: "Titulo para buscadores",
-          admin: {
-            description:
-              "Opcional. Se vazio, o titulo principal da pagina continua sendo usado.",
-          },
-        },
-        {
-          name: "description",
-          type: "textarea",
-          label: "Descricao para buscadores",
-          admin: {
-            description:
-              "Resumo curto da pagina para resultados de busca e cards de compartilhamento.",
-          },
-        },
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          label: "Imagem de compartilhamento",
-          admin: {
-            description:
-              "Opcional. Use uma imagem institucional representativa do conteudo.",
-          },
-        },
-      ],
+      fields: createSeoFields({
+        includeCanonical: true,
+        includeRobots: true,
+      }),
     },
   ],
 };

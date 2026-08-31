@@ -35,6 +35,7 @@ export function CardsBlock({ description, items, title, variant }: CardsBlockPro
                 <MediaImage
                   className={`${modalities ? "mb-6 h-14 w-14" : "mb-5 h-12 w-12"} shrink-0 object-contain`}
                   media={item.icon}
+                  sizes="56px"
                 />
                 <Heading level={3} size="md">
                   <span className="break-words">{item.title}</span>

@@ -39,6 +39,7 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 | `createLinkFields` | `src/fields/link.ts` | Contrato unico para links internos/externos em Blocks com CTA. |
 | `MediaImage` | `src/blocks/shared/MediaImage.tsx` | Renderizacao de uploads de midia do Payload. |
 | `createSocialLinkFields` | `src/globals/shared/social-link.ts` | Campos reutilizaveis para redes sociais oficiais em Globals. |
+| `createSeoFields` | `src/fields/seo.ts` | Campos reutilizaveis para Page SEO e SEO padrao. |
 
 ## Regras de uso
 
@@ -61,3 +62,19 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 - Centralizado: resolucao de href, target e rel vive em `src/lib/navigation/resolve-link.ts`.
 - Atualizados: Blocks com CTA usam o mesmo contrato de link; Header, Footer e SiteSettings mantem formatos compativeis com o banco atual e sao resolvidos pelo helper central.
 - Mantido: `src/blocks/shared/link.ts` reexporta o helper para compatibilidade interna.
+
+## Decisoes da SPEC-022
+
+- Media suporta papeis editoriais por `usage`: `content`, `background`, `logo`, `icon`, `infographic` e `document`.
+- MIME types permitidos: JPEG, PNG, WebP, GIF e PDF.
+- SVG permanece fora da lista permitida nesta fase.
+- Payload nao gera `imageSizes` nesta fase; `next/image` e `MediaImage` cuidam da responsividade no frontend.
+
+## Decisoes da SPEC-023
+
+- SEO editorial foi centralizado em `src/fields/seo.ts` e `src/lib/seo/metadata.ts`.
+- Pages usam `metaTitle`, `metaDescription`, `socialImage`, `canonical`, `noIndex` e `noFollow`.
+- `SiteSettings.defaultSEO` usa o mesmo field group sem canonical/robots.
+- Campos legados `title`, `description` e `image` seguem escondidos para compatibilidade.
+- Sitemap publico usa apenas Pages publicadas e ignora `seo.noIndex`.
+- `MediaImage` aceita `sizes`; Hero/ImageText usam regra responsiva e Cards/IconGrid usam tamanhos pequenos para icones.

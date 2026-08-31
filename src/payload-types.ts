@@ -153,13 +153,17 @@ export interface User {
   collection: 'users';
 }
 /**
- * Cadastre imagens usadas nos blocos, SEO e identidade visual. O texto alternativo e obrigatorio para acessibilidade.
+ * Cadastre imagens e documentos usados nos blocos, SEO e identidade visual. O texto alternativo e obrigatorio para acessibilidade.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
+  /**
+   * Classifique o papel editorial da midia. SVG nao e aceito; para icones e logos, use PNG ou WebP aprovados.
+   */
+  usage: 'content' | 'background' | 'logo' | 'icon' | 'infographic' | 'document';
   /**
    * Descreva objetivamente a imagem para pessoas que usam leitores de tela.
    */
@@ -216,6 +220,30 @@ export interface Page {
    * Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.
    */
   seo?: {
+    /**
+     * Opcional. Se vazio, o titulo principal da pagina ou o SEO padrao continua sendo usado.
+     */
+    metaTitle?: string | null;
+    /**
+     * Resumo curto usado por buscadores e cards de compartilhamento.
+     */
+    metaDescription?: string | null;
+    /**
+     * Opcional. Use uma imagem institucional representativa para redes sociais e OpenGraph.
+     */
+    socialImage?: (number | null) | Media;
+    /**
+     * Opcional. Informe apenas quando a pagina publica tiver uma URL canonica absoluta e confirmada.
+     */
+    canonical?: string | null;
+    /**
+     * Quando marcado, orienta buscadores a nao indexar esta pagina.
+     */
+    noIndex?: boolean | null;
+    /**
+     * Quando marcado, orienta buscadores a nao seguir links desta pagina.
+     */
+    noFollow?: boolean | null;
     /**
      * Opcional. Se vazio, o titulo principal da pagina continua sendo usado.
      */
@@ -823,6 +851,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  usage?: T;
   alt?: T;
   caption?: T;
   updatedAt?: T;
@@ -860,6 +889,12 @@ export interface PagesSelect<T extends boolean = true> {
   seo?:
     | T
     | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
+        canonical?: T;
+        noIndex?: T;
+        noFollow?: T;
         title?: T;
         description?: T;
         image?: T;
@@ -1245,6 +1280,18 @@ export interface SiteSetting {
    */
   defaultSEO?: {
     /**
+     * Opcional. Se vazio, o titulo principal da pagina ou o SEO padrao continua sendo usado.
+     */
+    metaTitle?: string | null;
+    /**
+     * Resumo curto usado por buscadores e cards de compartilhamento.
+     */
+    metaDescription?: string | null;
+    /**
+     * Opcional. Use uma imagem institucional representativa para redes sociais e OpenGraph.
+     */
+    socialImage?: (number | null) | Media;
+    /**
      * Titulo usado por buscadores quando a pagina nao informar um titulo especifico.
      */
     title?: string | null;
@@ -1328,6 +1375,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   defaultSEO?:
     | T
     | {
+        metaTitle?: T;
+        metaDescription?: T;
+        socialImage?: T;
         title?: T;
         description?: T;
         image?: T;

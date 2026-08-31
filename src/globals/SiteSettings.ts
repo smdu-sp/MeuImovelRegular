@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import { createSeoFields } from "../fields/seo.ts";
 import { validateOptionalHexColor } from "../lib/theme/colors.ts";
 
 export const SiteSettings: GlobalConfig = {
@@ -116,36 +117,7 @@ export const SiteSettings: GlobalConfig = {
         description:
           "Valores usados quando uma pagina nao possui SEO proprio configurado.",
       },
-      fields: [
-        {
-          name: "title",
-          type: "text",
-          label: "Titulo padrao",
-          admin: {
-            description:
-              "Titulo usado por buscadores quando a pagina nao informar um titulo especifico.",
-          },
-        },
-        {
-          name: "description",
-          type: "textarea",
-          label: "Descricao padrao",
-          admin: {
-            description:
-              "Resumo institucional usado quando a pagina nao informar uma descricao especifica.",
-          },
-        },
-        {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
-          label: "Imagem padrao",
-          admin: {
-            description:
-              "Imagem usada em compartilhamentos quando a pagina nao tiver uma imagem propria.",
-          },
-        },
-      ],
+      fields: createSeoFields(),
     },
   ],
 };

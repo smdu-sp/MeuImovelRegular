@@ -32,10 +32,12 @@ export function MediaImage({
   className,
   media,
   priority = false,
+  sizes = "100vw",
 }: {
   className?: string;
   media?: Media | number | null;
   priority?: boolean;
+  sizes?: string;
 }) {
   if (!media || typeof media !== "object" || !media.url) return null;
 
@@ -47,6 +49,7 @@ export function MediaImage({
       className={className}
       height={media.height || 900}
       priority={priority}
+      sizes={sizes}
       src={src}
       width={media.width || 1200}
     />

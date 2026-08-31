@@ -39,7 +39,7 @@ export async function generateMetadata(args: Args): Promise<Metadata> {
 
   const siteSettings = await getSiteSettings();
 
-  return resolvePageMetadata(page, siteSettings);
+  return resolvePageMetadata(page, siteSettings, { draft: isEnabled });
 }
 
 export default async function Page(args: Args) {

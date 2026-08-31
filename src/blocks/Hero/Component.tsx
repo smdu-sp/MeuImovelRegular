@@ -80,6 +80,7 @@ export function HeroBlock({
               className="aspect-video h-auto w-full rounded-xl border border-border object-cover"
               media={image}
               priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           ) : null}
         </div>

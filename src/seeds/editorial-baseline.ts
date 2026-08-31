@@ -237,8 +237,10 @@ for (const seed of pageSeeds) {
     slug: seed.slug,
     layout: seed.layout,
     seo: {
-      title: seed.title,
-      description: seed.description,
+      metaTitle: seed.title,
+      metaDescription: seed.description,
+      noFollow: false,
+      noIndex: false,
     },
     _status: "published" as const,
   };
@@ -359,8 +361,8 @@ await payload.updateGlobal({
       },
     ],
     defaultSEO: {
-      title: "Meu Imovel Regular",
-      description:
+      metaTitle: "Meu Imovel Regular",
+      metaDescription:
         "Orientacao preliminar sobre regularizacao imobiliaria e encaminhamento para servicos oficiais.",
     },
   },

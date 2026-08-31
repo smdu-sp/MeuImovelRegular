@@ -35,6 +35,7 @@ export function ImageTextBlock({
           <MediaImage
             className={`aspect-video h-auto w-full rounded-xl border border-border object-cover ${imageOnRight ? "lg:order-2" : ""}`}
             media={image}
+            sizes="(min-width: 1024px) 50vw, 100vw"
           />
           <div className="max-w-container-sm">
             <Heading level={2} size="lg">

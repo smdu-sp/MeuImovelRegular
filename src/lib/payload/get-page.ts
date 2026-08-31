@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
 import { getPayload } from "payload";
 
 import config from "@payload-config";
 import type { Page, SiteSetting } from "../../payload-types";
-
-type PageMetadataSource = Pick<Page, "seo" | "title">;
+import { pageSlugToPath } from "../../domain/slug";
+import { generatePageMetadata } from "../seo/metadata";
 
 type GetPageOptions = {
   draft?: boolean;
@@ -51,21 +50,28 @@ export async function getSiteSettings(): Promise<SiteSetting | null> {
   }
 }
 
-export function resolvePageMetadata(
-  page: PageMetadataSource,
-  siteSettings: SiteSetting | null,
-): Metadata {
-  const title =
-    page.seo?.title ||
-    page.title ||
-    siteSettings?.defaultSEO?.title ||
-    siteSettings?.siteName ||
-    "Meu Imovel Regular";
-  const description =
-    page.seo?.description || siteSettings?.defaultSEO?.description || undefined;
+export const resolvePageMetadata = generatePageMetadata;
 
-  return {
-    title,
-    description,
-  };
+export async function getPublishedPagesForSitemap(): Promise<Page[]> {
+  const payload = await getPayload({ config });
+
+  const result = await payload.find({
+    collection: "pages",
+    depth: 0,
+    limit: 1000,
+    pagination: false,
+    where: {
+      _status: {
+        equals: "published",
+      },
+      "seo.noIndex": {
+        not_equals: true,
+      },
+    },
+  });
+
+  return result.docs;
 }
+
+export const pageUrl = (slug: string, baseUrl: string): string =>
+  new URL(pageSlugToPath(slug), baseUrl).toString();

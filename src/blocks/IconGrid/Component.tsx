@@ -41,6 +41,7 @@ export function IconGridBlock({
                   <MediaImage
                     className={`${compact ? "h-9 w-9" : "h-11 w-11"} shrink-0 object-contain`}
                     media={item.icon}
+                    sizes={compact ? "36px" : "44px"}
                   />
                   <div className="min-w-0">
                     <Text weight="semibold">

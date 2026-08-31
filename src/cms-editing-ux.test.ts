@@ -10,6 +10,7 @@ import { RichTextBlock } from "./blocks/RichText/config";
 import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
 import { createLinkFields } from "./fields/link";
+import { createSeoFields } from "./fields/seo";
 import { Footer } from "./globals/Footer";
 import { Header } from "./globals/Header";
 import { SiteSettings } from "./globals/SiteSettings";
@@ -63,6 +64,23 @@ describe("CMS editing UX", () => {
     assert.match(adminDescription(seo) ?? "", /buscadores/i);
   });
 
+  it("uses reusable SEO fields with robots controls on Pages", () => {
+    const seo = fieldByName(Pages.fields, "seo");
+    const names =
+      "fields" in seo && Array.isArray(seo.fields)
+        ? seo.fields.map((field) => "name" in field ? String(field.name) : "")
+        : [];
+
+    assert.deepEqual(names.slice(0, 6), [
+      "metaTitle",
+      "metaDescription",
+      "socialImage",
+      "canonical",
+      "noIndex",
+      "noFollow",
+    ]);
+  });
+
   it("describes block variants without exposing implementation vocabulary", () => {
     const variants = [
       fieldByName(HeroBlock.fields, "variant"),
@@ -90,6 +108,21 @@ describe("CMS editing UX", () => {
     assert.ok(adminDescription(url));
   });
 
+  it("keeps SEO fields reusable and explicit", () => {
+    const fields = createSeoFields({
+      includeCanonical: true,
+      includeRobots: true,
+    });
+    const canonical = fieldByName(fields, "canonical");
+    const noIndex = fieldByName(fields, "noIndex");
+    const noFollow = fieldByName(fields, "noFollow");
+
+    assert.equal(canonical.label, "URL canonica");
+    assert.equal(noIndex.label, "Nao indexar");
+    assert.equal(noFollow.label, "Nao seguir links");
+    assert.ok("validate" in canonical);
+  });
+
   it("documents global settings and media fields for non-technical editors", () => {
     assert.ok(Media.admin?.description);
     assert.ok(Header.admin?.description);
@@ -98,10 +131,28 @@ describe("CMS editing UX", () => {
 
     const branding = fieldByName(SiteSettings.fields, "branding");
     const alt = fieldByName(Media.fields, "alt");
+    const usage = fieldByName(Media.fields, "usage");
 
     assert.equal(branding.label, "Cores institucionais");
+    assert.equal(usage.label, "Uso principal");
     assert.match(adminDescription(branding) ?? "", /CSS livre/);
     assert.match(adminDescription(alt) ?? "", /leitores de tela/);
+    assert.match(adminDescription(usage) ?? "", /SVG/);
+  });
+
+  it("keeps Media upload policy centralized", () => {
+    const upload = typeof Media.upload === "object" ? Media.upload : {};
+
+    assert.deepEqual("mimeTypes" in upload ? upload.mimeTypes : [], [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif",
+      "application/pdf",
+    ]);
+    assert.equal("displayPreview" in upload ? upload.displayPreview : false, true);
+    assert.equal("focalPoint" in upload ? upload.focalPoint : false, true);
+    assert.equal("imageSizes" in upload, false);
   });
 
   it("keeps reusable Footer content configurable in Globals", () => {

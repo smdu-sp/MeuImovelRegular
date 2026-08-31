@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import type { ReactNode } from "react";
 import { getSiteSettings } from "../../lib/payload/get-page";
+import { generateSiteMetadata } from "../../lib/seo/metadata";
 import { getTheme } from "../../lib/theme/get-theme";
 import { mapThemeToCssVariables } from "../../lib/theme/map-theme-to-css-variables";
 import "./globals.css";
@@ -9,13 +10,7 @@ import "./globals.css";
 export async function generateMetadata(): Promise<Metadata> {
   const siteSettings = await getSiteSettings();
 
-  return {
-    title:
-      siteSettings?.defaultSEO?.title ||
-      siteSettings?.siteName ||
-      "Meu Imovel Regular",
-    description: siteSettings?.defaultSEO?.description || undefined,
-  };
+  return generateSiteMetadata(siteSettings);
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
