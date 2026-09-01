@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredText } from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -26,6 +27,10 @@ export const ActionBannersBlock: Block = {
       label: "Modelo de exibicao",
       required: true,
       defaultValue: "grid",
+      validate: closedSelect(
+        ["grid", "stacked"],
+        "Escolha um modelo de faixas aprovado.",
+      ),
       admin: {
         description:
           "Grade mostra faixas lado a lado; empilhado favorece chamadas longas.",
@@ -53,6 +58,7 @@ export const ActionBannersBlock: Block = {
           type: "text",
           label: "Titulo da faixa",
           required: true,
+          validate: requiredText("Informe o titulo deste banner."),
           admin: {
             description: "Mensagem curta da faixa de acao.",
           },
@@ -72,6 +78,10 @@ export const ActionBannersBlock: Block = {
           label: "Tom visual",
           required: true,
           defaultValue: "primary",
+          validate: closedSelect(
+            ["primary", "brand", "accent"],
+            "Escolha uma aparencia aprovada para este banner.",
+          ),
           admin: {
             description:
               "Mapeia a faixa para tokens do Design System, sem cores livres.",

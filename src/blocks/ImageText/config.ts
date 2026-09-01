@@ -1,4 +1,9 @@
 import type { Block } from "payload";
+import {
+  closedSelect,
+  requiredRichText,
+  requiredText,
+} from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -16,6 +21,7 @@ export const ImageTextBlock: Block = {
       type: "text",
       label: "Titulo",
       required: true,
+      validate: requiredText("Informe o titulo da secao com midia."),
       admin: {
         description:
           "Titulo da secao que acompanha a imagem.",
@@ -26,6 +32,7 @@ export const ImageTextBlock: Block = {
       type: "richText",
       label: "Conteudo",
       required: true,
+      validate: requiredRichText("Escreva o conteudo que acompanha a midia."),
       admin: {
         description:
           "Texto complementar exibido ao lado da imagem em telas maiores.",
@@ -48,6 +55,10 @@ export const ImageTextBlock: Block = {
       label: "Posicao da imagem no desktop",
       required: true,
       defaultValue: "image-left",
+      validate: closedSelect(
+        ["image-left", "image-right"],
+        "Escolha uma posicao de imagem aprovada.",
+      ),
       admin: {
         description:
           "Escolha o lado da imagem em telas grandes. Em dispositivos moveis, imagem e texto ficam empilhados.",

@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredRichText } from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -25,6 +26,7 @@ export const AlertBoxBlock: Block = {
       type: "richText",
       label: "Conteudo do aviso",
       required: true,
+      validate: requiredRichText("Escreva o conteudo da caixa de aviso."),
       admin: {
         description:
           "Texto do aviso. Mantenha linguagem orientativa e evite conclusoes definitivas.",
@@ -36,6 +38,10 @@ export const AlertBoxBlock: Block = {
       label: "Tipo de aviso",
       required: true,
       defaultValue: "info",
+      validate: closedSelect(
+        ["info", "warning"],
+        "Escolha um tipo de aviso aprovado.",
+      ),
       admin: {
         description:
           "Define apenas o tom visual do aviso dentro do Design System.",

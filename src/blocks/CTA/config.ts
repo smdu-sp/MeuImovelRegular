@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredText } from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -16,6 +17,7 @@ export const CTABlock: Block = {
       type: "text",
       label: "Titulo",
       required: true,
+      validate: requiredText("Informe o titulo da chamada de acao."),
       admin: {
         description:
           "Mensagem curta que encerra uma secao ou orienta o proximo passo.",
@@ -46,6 +48,10 @@ export const CTABlock: Block = {
       label: "Modelo de chamada",
       required: true,
       defaultValue: "default",
+      validate: closedSelect(
+        ["default", "brand", "compact"],
+        "Escolha um modelo de chamada aprovado.",
+      ),
       admin: {
         description:
           "Padrao serve para chamadas gerais; Destaque institucional usa fundo forte; Compacta funciona melhor em encerramentos repetidos.",

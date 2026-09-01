@@ -201,7 +201,7 @@ export interface Page {
    */
   slug: string;
   /**
-   * Monte a pagina escolhendo blocos prontos. Cada bloco possui opcoes controladas pelo Design System.
+   * Monte a pagina escolhendo blocos prontos, agrupados por Conteúdo, Mídia e Ações. As aparências usam opções controladas pelo Design System; nenhum bloco executa contador ou timer automático nesta fase.
    */
   layout?:
     | (
@@ -217,7 +217,7 @@ export interface Page {
       )[]
     | null;
   /**
-   * Configure titulo, resumo e imagem usados por buscadores e compartilhamentos quando forem diferentes do conteudo principal.
+   * Configure titulo, resumo, OpenGraph, robots e URL canonica para buscadores quando forem diferentes do conteudo principal.
    */
   seo?: {
     /**
@@ -244,17 +244,8 @@ export interface Page {
      * Quando marcado, orienta buscadores a nao seguir links desta pagina.
      */
     noFollow?: boolean | null;
-    /**
-     * Opcional. Se vazio, o titulo principal da pagina continua sendo usado.
-     */
     title?: string | null;
-    /**
-     * Resumo curto da pagina para resultados de busca e cards de compartilhamento.
-     */
     description?: string | null;
-    /**
-     * Opcional. Use uma imagem institucional representativa do conteudo.
-     */
     image?: (number | null) | Media;
   };
   updatedAt: string;
@@ -308,7 +299,7 @@ export interface HeroBlock {
     newTab?: boolean | null;
   };
   /**
-   * Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop.
+   * Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop. Este bloco nao possui contador nem timer automatico.
    */
   variant: 'default' | 'centered' | 'split';
   id?: string | null;
@@ -1291,17 +1282,8 @@ export interface SiteSetting {
      * Opcional. Use uma imagem institucional representativa para redes sociais e OpenGraph.
      */
     socialImage?: (number | null) | Media;
-    /**
-     * Titulo usado por buscadores quando a pagina nao informar um titulo especifico.
-     */
     title?: string | null;
-    /**
-     * Resumo institucional usado quando a pagina nao informar uma descricao especifica.
-     */
     description?: string | null;
-    /**
-     * Imagem usada em compartilhamentos quando a pagina nao tiver uma imagem propria.
-     */
     image?: (number | null) | Media;
   };
   updatedAt?: string | null;

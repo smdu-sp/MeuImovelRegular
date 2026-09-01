@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredText } from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -25,6 +26,7 @@ export const HeroBlock: Block = {
       type: "text",
       label: "Titulo principal",
       required: true,
+      validate: requiredText("Informe o titulo principal do destaque."),
       admin: {
         description:
           "Mensagem principal da pagina. Pode ser longo, mas prefira uma frase clara.",
@@ -66,6 +68,10 @@ export const HeroBlock: Block = {
       label: "Modelo de apresentacao",
       required: true,
       defaultValue: "default",
+      validate: closedSelect(
+        ["default", "centered", "split"],
+        "Escolha um modelo de apresentacao aprovado.",
+      ),
       admin: {
         description:
           "Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop. Este bloco nao possui contador nem timer automatico.",

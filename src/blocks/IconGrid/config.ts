@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredText } from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -16,6 +17,7 @@ export const IconGridBlock: Block = {
       type: "text",
       label: "Titulo da secao",
       required: true,
+      validate: requiredText("Informe o titulo da grade de icones."),
       admin: {
         description:
           "Titulo curto que contextualiza o conjunto de itens com icones.",
@@ -36,6 +38,10 @@ export const IconGridBlock: Block = {
       label: "Modelo da grade",
       required: true,
       defaultValue: "default",
+      validate: closedSelect(
+        ["default", "compact"],
+        "Escolha um modelo de grade aprovado.",
+      ),
       admin: {
         description:
           "Padrao destaca descricoes; compacto favorece listas mais densas.",
@@ -73,6 +79,7 @@ export const IconGridBlock: Block = {
           type: "text",
           label: "Texto do item",
           required: true,
+          validate: requiredText("Informe a descricao deste item."),
           admin: {
             description:
               "Texto curto exibido junto ao icone. Evite paragrafos longos.",

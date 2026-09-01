@@ -1,4 +1,9 @@
 import type { Block } from "payload";
+import {
+  closedSelect,
+  requiredText,
+  requiredTextarea,
+} from "../../fields/editorial-validation";
 import { createLinkFields } from "../../fields/link";
 import { createBlockAdmin } from "../shared/admin";
 
@@ -35,6 +40,10 @@ export const CardsBlock: Block = {
       label: "Modelo da lista",
       required: true,
       defaultValue: "default",
+      validate: closedSelect(
+        ["default", "modalities"],
+        "Escolha um modelo de cards aprovado.",
+      ),
       admin: {
         description:
           "Padrao cobre listas editoriais gerais; modalidades destaca opcoes de regularizacao sem criar outro tipo de bloco.",
@@ -62,6 +71,7 @@ export const CardsBlock: Block = {
           type: "text",
           label: "Titulo do card",
           required: true,
+          validate: requiredText("Informe o titulo deste card."),
           admin: {
             description:
               "Texto principal do card. Pode quebrar linha sem afetar os demais itens.",
@@ -72,6 +82,7 @@ export const CardsBlock: Block = {
           type: "textarea",
           label: "Descricao do card",
           required: true,
+          validate: requiredTextarea("Informe a descricao deste card."),
           admin: {
             description:
               "Resumo ou orientacao exibida dentro do card.",

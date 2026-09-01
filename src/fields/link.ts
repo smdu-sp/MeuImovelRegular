@@ -6,7 +6,9 @@ import type {
 
 export type LinkSiblingData = {
   label?: string | null;
+  page?: unknown;
   type?: "internal" | "external" | null;
+  url?: string | null;
 };
 
 export const createLinkFields = (required = false): Field[] => [
@@ -15,6 +17,16 @@ export const createLinkFields = (required = false): Field[] => [
     type: "text",
     label: "Texto do link",
     required,
+    validate: ((value, { siblingData }) => {
+      const link = siblingData as LinkSiblingData;
+      const hasDestination = Boolean(link.page || link.url);
+
+      return required || hasDestination
+        ? typeof value === "string" && value.trim()
+          ? true
+          : "Informe o texto visivel do link."
+        : true;
+    }) satisfies TextFieldValidation,
     admin: {
       description:
         "Texto visivel para o usuario. Use uma acao clara, como Abrir pagina ou Saiba mais.",
@@ -47,9 +59,9 @@ export const createLinkFields = (required = false): Field[] => [
     },
     validate: ((value, { siblingData }) => {
       const link = siblingData as LinkSiblingData;
-      return link.type !== "internal" || (!required && !link.label) || value
+      return link.type !== "internal" || (!required && !link.label && !link.url) || value
         ? true
-        : "Selecione uma pagina interna.";
+        : "Informe o destino interno deste link.";
     }) satisfies RelationshipFieldSingleValidation,
   },
   {
@@ -64,8 +76,8 @@ export const createLinkFields = (required = false): Field[] => [
     validate: ((value, { siblingData }) => {
       const link = siblingData as LinkSiblingData;
       if (link.type !== "external") return true;
-      if (!required && !link.label) return true;
-      if (!value) return "Informe uma URL externa.";
+      if (!required && !link.label && !link.page) return true;
+      if (!value) return "Informe o destino externo deste link.";
 
       try {
         const url = new URL(value);

@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { closedSelect, requiredRichText } from "../../fields/editorial-validation";
 import { createBlockAdmin } from "../shared/admin";
 
 export const RichTextBlock: Block = {
@@ -15,6 +16,7 @@ export const RichTextBlock: Block = {
       type: "richText",
       label: "Conteudo",
       required: true,
+      validate: requiredRichText("Escreva o conteudo deste bloco."),
       admin: {
         description:
           "Area para texto, listas, links e subtitulos. A aparencia final segue a tipografia editorial do portal.",
@@ -26,6 +28,10 @@ export const RichTextBlock: Block = {
       label: "Modelo de leitura",
       required: true,
       defaultValue: "default",
+      validate: closedSelect(
+        ["default", "narrow"],
+        "Escolha um modelo de leitura aprovado.",
+      ),
       admin: {
         description:
           "Padrao usa largura ampla para conteudos variados. Leitura estreita favorece textos corridos longos.",
