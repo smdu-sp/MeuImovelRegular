@@ -14,6 +14,16 @@ import { revalidatePage } from "../lib/payload/revalidate-page.ts";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
+export const getPageLivePreviewUrl = (data: Record<string, unknown>): string | null => {
+  if (typeof data.slug !== "string" || !data.slug.trim()) {
+    return null;
+  }
+
+  const url = new URL("/api/live-preview", serverUrl);
+  url.searchParams.set("slug", data.slug);
+  return url.toString();
+};
+
 export const Pages: CollectionConfig = {
   slug: "pages",
   labels: {
@@ -24,6 +34,14 @@ export const Pages: CollectionConfig = {
     defaultColumns: ["title", "slug", "_status", "updatedAt"],
     description:
       "Crie e organize paginas editoriais do portal. Use rascunho, preview e publicacao para controlar o ciclo editorial.",
+    livePreview: {
+      breakpoints: [
+        { name: "mobile", label: "Celular", width: 390, height: 844 },
+        { name: "tablet", label: "Tablet", width: 768, height: 1024 },
+        { name: "desktop", label: "Desktop", width: 1440, height: 900 },
+      ],
+      url: ({ data }) => getPageLivePreviewUrl(data),
+    },
     preview: (doc, { token }) => {
       if (!token || typeof doc.slug !== "string") {
         return null;
@@ -92,7 +110,7 @@ export const Pages: CollectionConfig = {
       ],
       admin: {
         description:
-          "Monte a pagina escolhendo blocos prontos. Cada bloco possui opcoes controladas pelo Design System.",
+          "Monte a pagina escolhendo blocos prontos, agrupados por Conteúdo, Mídia e Ações. As aparências usam opções controladas pelo Design System; nenhum bloco executa contador ou timer automático nesta fase.",
         initCollapsed: true,
       },
     },

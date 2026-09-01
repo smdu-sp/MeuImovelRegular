@@ -204,7 +204,7 @@ describe("CMS editing UX", () => {
       ? options.map((option) => typeof option === "object" && "value" in option ? option.value : option)
       : [];
 
-    assert.equal(CardsBlock.labels?.singular, "Lista de cards");
+    assert.equal(CardsBlock.labels?.singular, "Cards e grades de benefícios");
     assert.deepEqual(values, ["default", "modalities"]);
     assert.match(adminDescription(variant) ?? "", /modalidades/);
     assert.match(adminDescription(items) ?? "", /1 a 12 cards/);

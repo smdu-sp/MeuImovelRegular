@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const IconGridBlock: Block = {
   slug: "iconGrid",
   interfaceName: "IconGridBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
-    singular: "Grade de icones",
-    plural: "Grades de icones",
+    singular: "Grade de ícones e informações",
+    plural: "Grades de ícones e informações",
   },
   fields: [
     {

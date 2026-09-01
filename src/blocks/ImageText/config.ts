@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const ImageTextBlock: Block = {
   slug: "imageText",
   interfaceName: "ImageTextBlock",
+  admin: createBlockAdmin("Mídia"),
   labels: {
-    singular: "Imagem com texto",
-    plural: "Imagens com texto",
+    singular: "Mídia e texto / imagem de destaque",
+    plural: "Mídia e texto / imagens de destaque",
   },
   fields: [
     {

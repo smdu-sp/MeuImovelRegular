@@ -1,8 +1,10 @@
 import type { Block } from "payload";
+import { createBlockAdmin } from "../shared/admin";
 
 export const FAQBlock: Block = {
   slug: "faqAccordion",
   interfaceName: "FAQAccordionBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
     singular: "Perguntas frequentes",
     plural: "Perguntas frequentes",

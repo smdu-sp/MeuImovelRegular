@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const ActionBannersBlock: Block = {
   slug: "actionBanners",
   interfaceName: "ActionBannersBlock",
+  admin: createBlockAdmin("Ações"),
   labels: {
-    singular: "Faixas de acao",
-    plural: "Faixas de acao",
+    singular: "Faixas de ação",
+    plural: "Faixas de ação",
   },
   fields: [
     {
@@ -75,9 +77,9 @@ export const ActionBannersBlock: Block = {
               "Mapeia a faixa para tokens do Design System, sem cores livres.",
           },
           options: [
-            { label: "Principal", value: "primary" },
-            { label: "Institucional", value: "brand" },
-            { label: "Apoio", value: "accent" },
+            { label: "Verde — principal", value: "primary" },
+            { label: "Azul — institucional", value: "brand" },
+            { label: "Amarelo — apoio", value: "accent" },
           ],
         },
         {

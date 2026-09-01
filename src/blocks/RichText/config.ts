@@ -1,8 +1,10 @@
 import type { Block } from "payload";
+import { createBlockAdmin } from "../shared/admin";
 
 export const RichTextBlock: Block = {
   slug: "richText",
   interfaceName: "RichTextBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
     singular: "Texto editorial",
     plural: "Textos editoriais",

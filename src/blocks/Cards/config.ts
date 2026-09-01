@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const CardsBlock: Block = {
   slug: "cards",
   interfaceName: "CardsBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
-    singular: "Lista de cards",
-    plural: "Listas de cards",
+    singular: "Cards e grades de benefícios",
+    plural: "Cards e grades de benefícios",
   },
   fields: [
     {

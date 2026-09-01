@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { RenderBlocks } from "../../components/RenderBlocks";
+import { LivePreviewPage } from "../../components/LivePreviewPage";
 import { HOME_SLUG } from "../../domain/slug";
 import {
   getPage,
@@ -35,7 +36,11 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <RenderBlocks blocks={page.layout} />
+      {isEnabled ? (
+        <LivePreviewPage initialData={page} />
+      ) : (
+        <RenderBlocks blocks={page.layout} />
+      )}
     </main>
   );
 }

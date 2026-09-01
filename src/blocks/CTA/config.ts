@@ -1,9 +1,11 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const CTABlock: Block = {
   slug: "cta",
   interfaceName: "CTABlock",
+  admin: createBlockAdmin("Ações"),
   labels: {
     singular: "Chamada de acao",
     plural: "Chamadas de acao",

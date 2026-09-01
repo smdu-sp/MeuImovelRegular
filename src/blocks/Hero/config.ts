@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const HeroBlock: Block = {
   slug: "hero",
   interfaceName: "HeroBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
-    singular: "Abertura da pagina",
-    plural: "Aberturas da pagina",
+    singular: "Destaque principal",
+    plural: "Destaques principais",
   },
   fields: [
     {
@@ -66,7 +68,7 @@ export const HeroBlock: Block = {
       defaultValue: "default",
       admin: {
         description:
-          "Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop.",
+          "Padrao alinha o conteudo a esquerda; Centralizado destaca uma mensagem curta; Imagem lateral exibe texto e imagem lado a lado no desktop. Este bloco nao possui contador nem timer automatico.",
       },
       options: [
         { label: "Padrao", value: "default" },

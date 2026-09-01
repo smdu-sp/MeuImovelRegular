@@ -1,12 +1,14 @@
 import type { Block } from "payload";
 import { createLinkFields } from "../../fields/link";
+import { createBlockAdmin } from "../shared/admin";
 
 export const AlertBoxBlock: Block = {
   slug: "alertBox",
   interfaceName: "AlertBoxBlock",
+  admin: createBlockAdmin("Conteúdo"),
   labels: {
-    singular: "Aviso editorial",
-    plural: "Avisos editoriais",
+    singular: "Caixa de aviso",
+    plural: "Caixas de aviso",
   },
   fields: [
     {
