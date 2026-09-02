@@ -10,6 +10,7 @@ import { HeroBlock } from "./blocks/Hero/config";
 import { IconGridBlock } from "./blocks/IconGrid/config";
 import { ImageTextBlock } from "./blocks/ImageText/config";
 import { RichTextBlock } from "./blocks/RichText/config";
+import { AuditLogs } from "./collections/AuditLogs";
 import { Media, mediaUsageOptions } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Users } from "./collections/Users";
@@ -276,5 +277,6 @@ describe("SPEC-029 CMS foundation validation", () => {
     assert.ok(SiteSettings.fields.some((field) => "name" in field && field.name === "defaultSEO"));
     assert.equal(typeof Pages.access?.create, "function");
     assert.equal(typeof Users.access?.read, "function");
+    assert.equal(typeof AuditLogs.access?.read, "function");
   });
 });

@@ -9,6 +9,10 @@ export type NavigationLink = {
   newTab?: boolean | null;
 };
 
+type PageWithLifecycle = Page & {
+  lifecycleStatus?: "active" | "inactive" | null;
+};
+
 export type ResolvedLink = {
   href: string;
   label: string;
@@ -18,7 +22,13 @@ export type ResolvedLink = {
 
 export const resolveLinkHref = (link: NavigationLink): string | null => {
   if (link.page && typeof link.page === "object") {
-    return pageSlugToPath(link.page.slug);
+    const page = link.page as PageWithLifecycle;
+
+    if (page.lifecycleStatus === "inactive") {
+      return null;
+    }
+
+    return pageSlugToPath(page.slug);
   }
 
   if (link.type === "external" || link.url) {

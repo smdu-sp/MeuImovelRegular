@@ -30,14 +30,48 @@ export const isEditor = (user?: UserWithRole | null): boolean =>
 export const canEditContent = (user?: UserWithRole | null): boolean =>
   isAdmin(user) || isEditor(user);
 
+export const canPublishPages = (user?: UserWithRole | null): boolean =>
+  canEditContent(user);
+
+export const canHardDeletePages = (user?: UserWithRole | null): boolean =>
+  isAdmin(user);
+
+export const canManagePageLifecycle = (user?: UserWithRole | null): boolean =>
+  isAdmin(user);
+
+export const canManageRestrictedSettings = (user?: UserWithRole | null): boolean =>
+  isAdmin(user);
+
+export const canManageUsers = (user?: UserWithRole | null): boolean =>
+  isAdmin(user);
+
+export const canReadAuditLogs = (user?: UserWithRole | null): boolean =>
+  isAdmin(user);
+
 const accessUser = (user: unknown): UserWithRole | null | undefined =>
   user as UserWithRole | null | undefined;
 
 export const adminOnly: Access = ({ req }: Parameters<Access>[0]) =>
   isAdmin(accessUser(req.user));
 
-export const adminOrEditor: Access = ({ req }: Parameters<Access>[0]) =>
+export const denyAll: Access = () => false;
+
+export const editorOrAdmin: Access = ({ req }: Parameters<Access>[0]) =>
   canEditContent(accessUser(req.user));
+
+export const adminOrEditor = editorOrAdmin;
+
+export const pagePublisherOrAdmin: Access = ({ req }: Parameters<Access>[0]) =>
+  canPublishPages(accessUser(req.user));
+
+export const pageHardDeleteAdminOnly: Access = ({ req }: Parameters<Access>[0]) =>
+  canHardDeletePages(accessUser(req.user));
+
+export const pageLifecycleAdminOnly: FieldAccess = ({ req }: Parameters<FieldAccess>[0]) =>
+  canManagePageLifecycle(accessUser(req.user));
+
+export const auditLogsAdminOnly: Access = ({ req }: Parameters<Access>[0]) =>
+  canReadAuditLogs(accessUser(req.user));
 
 export const publishedOrLoggedIn: Access = ({ req }: Parameters<Access>[0]) => {
   if (canEditContent(accessUser(req.user))) {

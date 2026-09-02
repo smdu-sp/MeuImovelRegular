@@ -3,6 +3,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
+import { AuditLogs } from "./collections/AuditLogs.ts";
 import { Media } from "./collections/Media.ts";
 import { Pages } from "./collections/Pages.ts";
 import { Users } from "./collections/Users.ts";
@@ -33,7 +34,7 @@ export default buildConfig({
       ),
     },
   },
-  collections: [Users, Media, Pages],
+  collections: [Users, Media, Pages, AuditLogs],
   globals: [Header, Footer, SiteSettings],
   db: sqliteAdapter({
     client: {

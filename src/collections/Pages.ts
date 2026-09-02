@@ -8,9 +8,16 @@ import { HeroBlock } from "../blocks/Hero/config.ts";
 import { IconGridBlock } from "../blocks/IconGrid/config.ts";
 import { ImageTextBlock } from "../blocks/ImageText/config.ts";
 import { RichTextBlock } from "../blocks/RichText/config.ts";
-import { adminOrEditor, publishedOrLoggedIn } from "../access/roles.ts";
+import {
+  denyAll,
+  editorOrAdmin,
+  pageLifecycleAdminOnly,
+  pagePublisherOrAdmin,
+  publishedOrLoggedIn,
+} from "../access/roles.ts";
 import { normalizePageSlug, validatePageSlug } from "../domain/slug.ts";
 import { createSeoFields } from "../fields/seo.ts";
+import { createPageAuditLog } from "../lib/audit/page-audit.ts";
 import { revalidatePage } from "../lib/payload/revalidate-page.ts";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -27,11 +34,12 @@ export const getPageLivePreviewUrl = (data: Record<string, unknown>): string | n
 
 export const Pages: CollectionConfig = {
   slug: "pages",
+  disableBulkDelete: true,
   access: {
-    create: adminOrEditor,
+    create: editorOrAdmin,
     read: publishedOrLoggedIn,
-    update: adminOrEditor,
-    delete: adminOrEditor,
+    update: pagePublisherOrAdmin,
+    delete: denyAll,
   },
   labels: {
     singular: "Página",
@@ -65,7 +73,7 @@ export const Pages: CollectionConfig = {
     useAsTitle: "title",
   },
   hooks: {
-    afterChange: [({ doc }) => revalidatePage(doc.slug)],
+    afterChange: [createPageAuditLog, ({ doc }) => revalidatePage(doc.slug)],
     afterDelete: [({ doc }) => revalidatePage(doc.slug)],
   },
   versions: {
@@ -99,6 +107,26 @@ export const Pages: CollectionConfig = {
         beforeValidate: [({ value }) => normalizePageSlug(value)],
       },
       validate: validatePageSlug,
+    },
+    {
+      name: "lifecycleStatus",
+      type: "select",
+      label: "Status do conteudo",
+      required: true,
+      defaultValue: "active",
+      access: {
+        create: pageLifecycleAdminOnly,
+        update: pageLifecycleAdminOnly,
+      },
+      admin: {
+        description:
+          "Use Ativo para conteudo publicavel. Use Inativo para remover a pagina da navegacao e do acesso publico sem apagar historico.",
+        position: "sidebar",
+      },
+      options: [
+        { label: "Ativo", value: "active" },
+        { label: "Inativo", value: "inactive" },
+      ],
     },
     {
       name: "layout",

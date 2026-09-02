@@ -71,11 +71,15 @@ describe("CMS editing UX", () => {
 
   it("adds editor-facing descriptions to page structure fields", () => {
     const slug = fieldByName(Pages.fields, "slug");
+    const lifecycleStatus = fieldByName(Pages.fields, "lifecycleStatus");
     const layout = fieldByName(Pages.fields, "layout");
     const seo = fieldByName(Pages.fields, "seo");
 
     assert.equal(slug.label, "Endereco da pagina");
+    assert.equal(lifecycleStatus.label, "Status do conteudo");
+    assert.equal("defaultValue" in lifecycleStatus ? lifecycleStatus.defaultValue : undefined, "active");
     assert.match(adminDescription(slug) ?? "", /home/);
+    assert.match(adminDescription(lifecycleStatus) ?? "", /Inativo/);
     assert.match(adminDescription(layout) ?? "", /blocos prontos/i);
     assert.match(adminDescription(seo) ?? "", /buscadores/i);
   });

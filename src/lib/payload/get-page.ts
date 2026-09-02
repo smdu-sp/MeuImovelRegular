@@ -9,6 +9,12 @@ type GetPageOptions = {
   draft?: boolean;
 };
 
+export const activeLifecycleWhere = {
+  lifecycleStatus: {
+    equals: "active",
+  },
+} as const;
+
 export async function getPage(
   slug: string,
   { draft = false }: GetPageOptions = {},
@@ -21,6 +27,7 @@ export async function getPage(
     draft,
     limit: 1,
     where: {
+      ...activeLifecycleWhere,
       slug: {
         equals: slug,
       },
@@ -61,6 +68,7 @@ export async function getPublishedPagesForSitemap(): Promise<Page[]> {
     limit: 1000,
     pagination: false,
     where: {
+      ...activeLifecycleWhere,
       _status: {
         equals: "published",
       },

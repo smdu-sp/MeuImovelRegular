@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    'audit-logs': AuditLog;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -204,6 +206,10 @@ export interface Page {
    * Use "home" para a pagina inicial. Para paginas internas, use letras minusculas, numeros e hifens. O valor "/" tambem vira "home".
    */
   slug: string;
+  /**
+   * Use Ativo para conteudo publicavel. Use Inativo para remover a pagina da navegacao e do acesso publico sem apagar historico.
+   */
+  lifecycleStatus: 'active' | 'inactive';
   /**
    * Monte a pagina escolhendo blocos prontos, agrupados por Conteúdo, Mídia e Ações. As aparências usam opções controladas pelo Design System; nenhum bloco executa contador ou timer automático nesta fase.
    */
@@ -742,6 +748,31 @@ export interface ActionBannersBlock {
   blockType: 'actionBanners';
 }
 /**
+ * Consulte eventos editoriais registrados automaticamente. Logs nao devem ser editados ou criados manualmente.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs".
+ */
+export interface AuditLog {
+  id: number;
+  timestamp: string;
+  actor?: (number | null) | User;
+  actorEmail?: string | null;
+  action: 'create' | 'update' | 'publish' | 'unpublish' | 'deactivate' | 'reactivate';
+  collection: string;
+  documentId: string;
+  documentTitle: string;
+  version?: string | null;
+  changedFields?:
+    | {
+        field: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -776,6 +807,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'audit-logs';
+        value: number | AuditLog;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -869,6 +904,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  lifecycleStatus?: T;
   layout?:
     | T
     | {
@@ -1091,6 +1127,28 @@ export interface ActionBannersBlockSelect<T extends boolean = true> {
       };
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs_select".
+ */
+export interface AuditLogsSelect<T extends boolean = true> {
+  timestamp?: T;
+  actor?: T;
+  actorEmail?: T;
+  action?: T;
+  collection?: T;
+  documentId?: T;
+  documentTitle?: T;
+  version?: T;
+  changedFields?:
+    | T
+    | {
+        field?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

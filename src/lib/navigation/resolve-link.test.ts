@@ -12,6 +12,11 @@ const page = {
   updatedAt: "2026-01-01T00:00:00.000Z",
 } satisfies Page;
 
+const inactivePage = {
+  ...page,
+  lifecycleStatus: "inactive",
+} as Page & { lifecycleStatus: "inactive" };
+
 describe("navigation link resolver", () => {
   it("resolves internal links from Page relationships", () => {
     assert.equal(
@@ -30,6 +35,17 @@ describe("navigation link resolver", () => {
         label: "Entenda a lei",
         type: "internal",
         page: 1,
+      }),
+      null,
+    );
+  });
+
+  it("does not resolve internal links to inactive pages", () => {
+    assert.equal(
+      resolveLinkHref({
+        label: "Entenda a lei",
+        type: "internal",
+        page: inactivePage,
       }),
       null,
     );
