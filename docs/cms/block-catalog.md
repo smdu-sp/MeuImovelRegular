@@ -78,3 +78,17 @@ Este catalogo registra a base real encontrada no projeto durante a SPEC-018. Ele
 - Campos legados `title`, `description` e `image` seguem escondidos para compatibilidade.
 - Sitemap publico usa apenas Pages publicadas e ignora `seo.noIndex`.
 - `MediaImage` aceita `sizes`; Hero/ImageText usam regra responsiva e Cards/IconGrid usam tamanhos pequenos para icones.
+
+## Decisoes da SPEC-028
+
+- Processo de evolucao de schema documentado em `docs/cms/schema-evolution-migrations.md`.
+- Fixtures antiga e nova de `Pages.layout` foram fixadas em teste para validar renderizacao de dados persistidos.
+- Variants legadas e desconhecidas continuam dependendo dos normalizadores dos componentes, sem migration destrutiva neste ciclo.
+- Renames, remocoes, mudancas de tipo e mudancas de relationship passam a exigir plano de migration antes do patch.
+
+## Decisoes da SPEC-029
+
+- A validacao final da fundacao CMS foi registrada em `docs/cms/foundation-validation.md`.
+- Os quatro cenarios mapeados foram cobertos por fixtures de composicao em `src/cms-foundation-validation.test.ts`.
+- `docs/cms/known-issues.md` separa dividas em CMS foundation, visual fidelity e domain features deferred.
+- A fundacao foi validada sem implementar regras das Specs 007 a 010.

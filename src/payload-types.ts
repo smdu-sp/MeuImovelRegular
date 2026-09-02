@@ -133,6 +133,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  /**
+   * Controla o acesso editorial no CMS. Apenas administradores podem alterar perfis.
+   */
+  role?: 'admin' | 'editor' | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -820,6 +824,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

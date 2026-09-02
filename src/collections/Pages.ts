@@ -8,6 +8,7 @@ import { HeroBlock } from "../blocks/Hero/config.ts";
 import { IconGridBlock } from "../blocks/IconGrid/config.ts";
 import { ImageTextBlock } from "../blocks/ImageText/config.ts";
 import { RichTextBlock } from "../blocks/RichText/config.ts";
+import { adminOrEditor, publishedOrLoggedIn } from "../access/roles.ts";
 import { normalizePageSlug, validatePageSlug } from "../domain/slug.ts";
 import { createSeoFields } from "../fields/seo.ts";
 import { revalidatePage } from "../lib/payload/revalidate-page.ts";
@@ -26,6 +27,12 @@ export const getPageLivePreviewUrl = (data: Record<string, unknown>): string | n
 
 export const Pages: CollectionConfig = {
   slug: "pages",
+  access: {
+    create: adminOrEditor,
+    read: publishedOrLoggedIn,
+    update: adminOrEditor,
+    delete: adminOrEditor,
+  },
   labels: {
     singular: "Página",
     plural: "Páginas",

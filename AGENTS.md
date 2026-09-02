@@ -83,4 +83,5 @@ A aplicacao nao deve tratar dados locais como fonte oficial do CEDI.
 - Implemente apenas a spec solicitada pelo usuario.
 - Nao antecipe collections do Payload, blocks, triagem, integracao CEDI, paginas completas ou componentes visuais definitivos.
 - Antes de alterar arquivos, inspecione a estrutura atual, identifique conflitos e informe os arquivos pretendidos.
+- Mudancas em schemas de Pages, Blocks, Globals, Media ou Users devem avaliar impacto sobre documentos persistidos; renames, remocoes, mudancas de tipo e mudancas de relationship exigem plano de migration antes do patch.
 - Ao finalizar, registre decisoes, desvios e comandos de validacao executados.

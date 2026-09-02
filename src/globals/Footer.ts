@@ -1,8 +1,13 @@
 import type { GlobalConfig } from "payload";
+import { adminOrEditor } from "../access/roles.ts";
 import { createSocialLinkFields } from "./shared/social-link.ts";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
+  access: {
+    read: () => true,
+    update: adminOrEditor,
+  },
   label: "Rodapé",
   admin: {
     description:

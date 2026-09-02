@@ -9,6 +9,7 @@ import { ImageTextBlock } from "./blocks/ImageText/config";
 import { RichTextBlock } from "./blocks/RichText/config";
 import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
+import { Users } from "./collections/Users";
 import { createLinkFields } from "./fields/link";
 import { createSeoFields } from "./fields/seo";
 import { Footer } from "./globals/Footer";
@@ -51,6 +52,21 @@ describe("CMS editing UX", () => {
       previewUrl,
       "http://localhost:3000/api/draft?collection=pages&slug=entenda-a-lei&token=preview-token",
     );
+  });
+
+  it("wires CMS access control to roles", () => {
+    const role = fieldByName(Users.fields, "role");
+
+    assert.equal(Users.access?.create, Users.access?.update);
+    assert.equal(typeof Users.access?.read, "function");
+    assert.equal(typeof Pages.access?.create, "function");
+    assert.equal(typeof Pages.access?.read, "function");
+    assert.equal(typeof Media.access?.create, "function");
+    assert.equal(Header.access?.read?.({ req: {} } as Parameters<NonNullable<typeof Header.access.read>>[0]), true);
+    assert.equal(Footer.access?.read?.({ req: {} } as Parameters<NonNullable<typeof Footer.access.read>>[0]), true);
+    assert.equal(SiteSettings.access?.read?.({ req: {} } as Parameters<NonNullable<typeof SiteSettings.access.read>>[0]), true);
+    assert.equal(role.label, "Perfil de acesso");
+    assert.equal("defaultValue" in role ? role.defaultValue : undefined, "admin");
   });
 
   it("adds editor-facing descriptions to page structure fields", () => {

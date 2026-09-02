@@ -1,9 +1,14 @@
 import type { GlobalConfig } from "payload";
+import { adminOnly } from "../access/roles.ts";
 import { createSeoFields } from "../fields/seo.ts";
 import { validateOptionalHexColor } from "../lib/theme/colors.ts";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
+  access: {
+    read: () => true,
+    update: adminOnly,
+  },
   label: "Configurações do site",
   admin: {
     description:

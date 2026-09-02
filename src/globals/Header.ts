@@ -1,7 +1,12 @@
 import type { GlobalConfig } from "payload";
+import { adminOrEditor } from "../access/roles.ts";
 
 export const Header: GlobalConfig = {
   slug: "header",
+  access: {
+    read: () => true,
+    update: adminOrEditor,
+  },
   label: "Cabeçalho",
   admin: {
     description:
