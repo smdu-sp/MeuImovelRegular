@@ -19,7 +19,8 @@ import {
   getUserRole,
   isAdmin,
   isEditor,
-  pageLifecycleAdminOnly,
+  pageHardDeleteAdminOnly,
+  pageLifecycleEditorOrAdmin,
   pagePublisherOrAdmin,
   publishedOrLoggedIn,
 } from "./roles";
@@ -78,7 +79,7 @@ describe("CMS roles and permissions", () => {
 
     assert.equal(canEditContent(editor), true);
     assert.equal(canHardDeletePages(editor), false);
-    assert.equal(canManagePageLifecycle(editor), false);
+    assert.equal(canManagePageLifecycle(editor), true);
     assert.equal(canManageRestrictedSettings(editor), false);
     assert.equal(canManageUsers(editor), false);
     assert.equal(canPublishPages(editor), true);
@@ -94,7 +95,7 @@ describe("CMS roles and permissions", () => {
     assert.equal(adminOrEditor(accessArgs(null)), false);
     assert.equal(editorOrAdmin(accessArgs(null)), false);
     assert.equal(pagePublisherOrAdmin(accessArgs(null)), false);
-    assert.equal(pageLifecycleAdminOnly(fieldArgs(null)), false);
+    assert.equal(pageLifecycleEditorOrAdmin(fieldArgs(null)), false);
     assert.equal(denyAll(accessArgs(null)), false);
     assert.deepEqual(publishedOrLoggedIn(accessArgs(null)), {
       _status: {
@@ -117,9 +118,9 @@ describe("CMS roles and permissions", () => {
     assert.equal(Pages.access?.create?.(accessArgs(editor)), true);
     assert.equal(Pages.access?.update?.(accessArgs(editor)), true);
     assert.equal(Pages.access?.delete?.(accessArgs(editor)), false);
-    assert.equal(Pages.access?.delete?.(accessArgs(admin)), false);
-    assert.equal(pageLifecycleAdminOnly(fieldArgs(editor)), false);
-    assert.equal(pageLifecycleAdminOnly(fieldArgs(admin)), true);
+    assert.equal(Pages.access?.delete?.(accessArgs(admin)), true);
+    assert.equal(pageLifecycleEditorOrAdmin(fieldArgs(editor)), true);
+    assert.equal(pageLifecycleEditorOrAdmin(fieldArgs(admin)), true);
 
     assert.equal(Media.access?.create?.(accessArgs(editor)), true);
     assert.equal(Media.access?.update?.(accessArgs(editor)), true);
@@ -144,15 +145,15 @@ describe("CMS roles and permissions", () => {
     const editor = { id: 2, role: "editor" as const };
 
     assert.equal(Pages.access?.update, pagePublisherOrAdmin);
-    assert.equal(Pages.access?.delete, denyAll);
+    assert.equal(Pages.access?.delete, pageHardDeleteAdminOnly);
     assert.equal(Users.access?.read, adminOnly);
     assert.equal(SiteSettings.access?.update, adminOnly);
     assert.equal(AuditLogs.access?.read, auditLogsAdminOnly);
 
     assert.equal(pagePublisherOrAdmin(accessArgs(editor)), true);
-    assert.equal(Pages.access?.delete?.(accessArgs(admin)), false);
-    assert.equal(pageLifecycleAdminOnly(fieldArgs(admin)), true);
-    assert.equal(pageLifecycleAdminOnly(fieldArgs(editor)), false);
+    assert.equal(Pages.access?.delete?.(accessArgs(admin)), true);
+    assert.equal(pageLifecycleEditorOrAdmin(fieldArgs(admin)), true);
+    assert.equal(pageLifecycleEditorOrAdmin(fieldArgs(editor)), true);
     assert.equal(auditLogsAdminOnly(accessArgs(admin)), true);
     assert.equal(auditLogsAdminOnly(accessArgs(editor)), false);
     assert.equal(AuditLogs.access?.create?.(accessArgs(admin)), false);

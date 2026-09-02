@@ -15,9 +15,9 @@ O controle deve valer no Payload Admin, nas APIs do Payload e na Local API quand
 - Editor cria, edita, publica e despublica Pages.
 - Editor gerencia Media, Header e Footer por serem superficies editoriais.
 - Editor nao acessa Users, Logs nem configuracoes de Theme/SiteSettings.
-- Hard delete de Pages fica bloqueado no fluxo normal.
-- Admin pode desativar e reativar Pages por `lifecycleStatus`.
-- Editor nao pode desativar ou reativar Pages.
+- Admin pode fazer hard delete de Pages quando a exclusao destrutiva for necessaria.
+- Admin e Editor podem desativar e reativar Pages por `lifecycleStatus`.
+- A lista de Pages nao oferece edicao em massa nem selecao por checkbox; cada Page deve ser aberta para edicao individual.
 
 ## Matriz
 
@@ -28,8 +28,10 @@ O controle deve valer no Payload Admin, nas APIs do Payload e na Local API quand
 | Pages - editar rascunho/conteudo | sim | sim | `pagePublisherOrAdmin`, equivalente a Admin ou Editor neste ciclo. |
 | Pages - publicar | sim | sim | Publicacao usa update do Payload; decisao explicita: Editor pode publicar. |
 | Pages - despublicar | sim | sim | Unpublish usa update do Payload; decisao explicita: Editor pode despublicar. |
-| Pages - hard delete | nao | nao | `denyAll`; exclusao destrutiva nao faz parte do fluxo editorial normal. |
-| Pages - desativar/reativar | sim | nao | Campo `lifecycleStatus` usa `pageLifecycleAdminOnly`. |
+| Pages - hard delete | sim | nao | `pageHardDeleteAdminOnly`. |
+| Pages - desativar/reativar | sim | sim | Campo `lifecycleStatus` usa `pageLifecycleEditorOrAdmin`. |
+| Pages - edicao em massa | nao | nao | `disableBulkEdit`; usuarios devem abrir cada Page para editar. |
+| Pages - selecao por checkbox | nao | nao | CSS escopado em `.collection-list--pages` oculta a coluna de selecao do Admin. |
 | Media - visualizar | sim | sim | `read` publico; Admin e Editor tambem acessam no Admin. |
 | Media - criar | sim | sim | `editorOrAdmin`. |
 | Media - editar | sim | sim | `editorOrAdmin`. |
@@ -57,9 +59,9 @@ Nao ha mudanca de schema nesta SPEC. Nenhuma migration e necessaria.
 
 Mudanca de comportamento:
 
-- O fluxo normal nao permite hard delete em Pages.
+- Admin pode fazer hard delete em Pages; Editor nao pode excluir Pages.
 - Editor continua podendo criar, editar, publicar e despublicar Pages.
-- Editor nao altera `lifecycleStatus`.
+- Editor pode alterar `lifecycleStatus` para desativar ou reativar Pages.
 - Usuarios sem `role` continuam tratados como Admin legado para compatibilidade com bases existentes, conforme registrado na SPEC-028.
 
 ## Testes

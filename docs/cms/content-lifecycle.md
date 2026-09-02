@@ -36,10 +36,10 @@ Se uma relacao ainda apontar para Page inativa, o renderizador deve falhar fecha
 
 ## Permissoes
 
-- Admin pode desativar e reativar Pages alterando `lifecycleStatus`.
-- Editor nao pode alterar `lifecycleStatus`.
+- Admin e Editor podem desativar e reativar Pages alterando `lifecycleStatus`.
 - Editor continua podendo criar, editar, publicar e despublicar Pages.
-- Hard delete de Pages fica bloqueado no fluxo normal por `denyAll`; a alternativa editorial e desativar.
+- Admin pode fazer hard delete de Pages quando a exclusao destrutiva for necessaria.
+- Editor nao pode fazer hard delete de Pages; a alternativa editorial e desativar.
 
 ## Auditoria
 

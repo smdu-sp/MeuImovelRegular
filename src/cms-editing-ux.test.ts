@@ -105,6 +105,8 @@ describe("CMS editing UX", () => {
   });
 
   it("keeps Pages easy to identify and preview", () => {
+    assert.equal(Pages.disableBulkDelete, true);
+    assert.equal(Pages.disableBulkEdit, true);
     assert.equal(Pages.admin?.useAsTitle, "title");
     assert.deepEqual(Pages.admin?.defaultColumns, ["title", "slug", "_status", "updatedAt"]);
 

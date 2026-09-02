@@ -2,10 +2,15 @@ import {
   adminHelpBlockGuides,
   adminHelpSections,
 } from "../../admin/help-content";
+import { AdminHelpBackButton } from "./AdminHelpBackButton";
 
 export function AdminHelpPage() {
   return (
     <main className="admin-help">
+      <div className="admin-help__topbar">
+        <AdminHelpBackButton />
+      </div>
+
       <header className="admin-help__header">
         <p className="admin-help__eyebrow">Ajuda</p>
         <h1>Documentação do Admin</h1>

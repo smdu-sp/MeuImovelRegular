@@ -12,10 +12,46 @@
   color: var(--theme-text);
 }
 
+.collection-list--pages #heading-_select,
+.collection-list--pages .cell-_select {
+  display: none;
+}
+
+.collection-list--pages .list-selection {
+  display: none;
+}
+
 .admin-help {
   margin: 0 auto;
   max-width: 1120px;
   padding: 32px;
+}
+
+.admin-help__topbar {
+  align-items: center;
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.admin-help__back-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 4px;
+  color: var(--theme-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 20px;
+  height: 36px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+}
+
+.admin-help__back-button:hover,
+.admin-help__back-button:focus-visible {
+  background: var(--theme-elevation-50);
 }
 
 .admin-help__header {

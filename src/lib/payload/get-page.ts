@@ -15,6 +15,23 @@ export const activeLifecycleWhere = {
   },
 } as const;
 
+export const buildPageLookupWhere = (
+  slug: string,
+  { draft = false }: GetPageOptions = {},
+) => ({
+  ...activeLifecycleWhere,
+  slug: {
+    equals: slug,
+  },
+  ...(draft
+    ? {}
+    : {
+        _status: {
+          equals: "published",
+        },
+      }),
+});
+
 export async function getPage(
   slug: string,
   { draft = false }: GetPageOptions = {},
@@ -26,19 +43,7 @@ export async function getPage(
     depth: 2,
     draft,
     limit: 1,
-    where: {
-      ...activeLifecycleWhere,
-      slug: {
-        equals: slug,
-      },
-      ...(draft
-        ? {}
-        : {
-            _status: {
-              equals: "published",
-            },
-          }),
-    },
+    where: buildPageLookupWhere(slug, { draft }),
   });
 
   return result.docs[0] ?? null;

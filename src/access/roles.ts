@@ -37,7 +37,7 @@ export const canHardDeletePages = (user?: UserWithRole | null): boolean =>
   isAdmin(user);
 
 export const canManagePageLifecycle = (user?: UserWithRole | null): boolean =>
-  isAdmin(user);
+  canEditContent(user);
 
 export const canManageRestrictedSettings = (user?: UserWithRole | null): boolean =>
   isAdmin(user);
@@ -67,7 +67,7 @@ export const pagePublisherOrAdmin: Access = ({ req }: Parameters<Access>[0]) =>
 export const pageHardDeleteAdminOnly: Access = ({ req }: Parameters<Access>[0]) =>
   canHardDeletePages(accessUser(req.user));
 
-export const pageLifecycleAdminOnly: FieldAccess = ({ req }: Parameters<FieldAccess>[0]) =>
+export const pageLifecycleEditorOrAdmin: FieldAccess = ({ req }: Parameters<FieldAccess>[0]) =>
   canManagePageLifecycle(accessUser(req.user));
 
 export const auditLogsAdminOnly: Access = ({ req }: Parameters<Access>[0]) =>
