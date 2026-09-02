@@ -7,6 +7,10 @@ import { CTABlock } from "./blocks/CTA/config";
 import { HeroBlock } from "./blocks/Hero/config";
 import { ImageTextBlock } from "./blocks/ImageText/config";
 import { RichTextBlock } from "./blocks/RichText/config";
+import {
+  adminHelpBlockGuides,
+  adminHelpSections,
+} from "./admin/help-content";
 import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
@@ -16,6 +20,7 @@ import { Footer } from "./globals/Footer";
 import { Header } from "./globals/Header";
 import { SiteSettings } from "./globals/SiteSettings";
 import { createSocialLinkFields } from "./globals/shared/social-link";
+import { adminHelpNavLink, adminHelpView } from "./payload.config";
 
 type FieldLike = Field & {
   admin?: {
@@ -39,6 +44,66 @@ const adminDescription = (field: FieldLike): string | undefined =>
     : undefined;
 
 describe("CMS editing UX", () => {
+  it("exposes user documentation from the Admin", () => {
+    assert.equal(
+      adminHelpNavLink,
+      "/components/admin/AdminHelpNavLink#AdminHelpNavLink",
+    );
+    assert.equal(adminHelpView.path, "/ajuda");
+    assert.equal(
+      adminHelpView.Component,
+      "/components/admin/AdminHelpPage#AdminHelpPage",
+    );
+  });
+
+  it("covers the minimum Admin help topics for editors and admins", () => {
+    const titles = adminHelpSections.map((section) => section.title);
+    const body = adminHelpSections.flatMap((section) => section.body).join(" ");
+
+    assert.deepEqual(titles, [
+      "Primeiros passos",
+      "Criando uma pagina",
+      "Entendendo Blocks",
+      "Adicionando imagens",
+      "Links internos e externos",
+      "Estilos disponiveis",
+      "Draft, Preview, Publish e Unpublish",
+      "Desativacao",
+      "SEO",
+      "Boas praticas",
+    ]);
+    assert.match(body, /Editor/);
+    assert.match(body, /Admin/);
+    assert.match(body, /rascunho/);
+    assert.match(body, /Preview/);
+    assert.match(body, /Publish/);
+    assert.match(body, /Unpublish/);
+  });
+
+  it("documents every approved Page Block for Admin users", () => {
+    assert.deepEqual(
+      adminHelpBlockGuides.map((block) => block.name),
+      [
+        "Destaque principal",
+        "Texto editorial",
+        "Midia e texto / imagem de destaque",
+        "Cards e grades de beneficios",
+        "Chamada para acao",
+        "Grade de icones e informacoes",
+        "Perguntas frequentes",
+        "Caixa de aviso",
+        "Faixas de acao",
+      ],
+    );
+
+    for (const block of adminHelpBlockGuides) {
+      assert.ok(block.fields.length > 0);
+      assert.ok(block.purpose);
+      assert.ok(block.useWhen);
+      assert.ok(block.avoidWhen);
+    }
+  });
+
   it("keeps Pages easy to identify and preview", () => {
     assert.equal(Pages.admin?.useAsTitle, "title");
     assert.deepEqual(Pages.admin?.defaultColumns, ["title", "slug", "_status", "updatedAt"]);

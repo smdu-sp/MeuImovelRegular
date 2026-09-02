@@ -1,1 +1,100 @@
 
+.admin-help-nav-link {
+  color: var(--theme-text);
+  display: block;
+  padding: 8px var(--base);
+  text-decoration: none;
+}
+
+.admin-help-nav-link:hover,
+.admin-help-nav-link:focus-visible {
+  background: var(--theme-elevation-50);
+  color: var(--theme-text);
+}
+
+.admin-help {
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 32px;
+}
+
+.admin-help__header {
+  border-bottom: 1px solid var(--theme-elevation-150);
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+}
+
+.admin-help__eyebrow {
+  color: var(--theme-text);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.admin-help__header h1 {
+  margin: 0 0 12px;
+}
+
+.admin-help__header p {
+  max-width: 720px;
+}
+
+.admin-help__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.admin-help__nav a {
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 4px;
+  color: var(--theme-text);
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.admin-help__sections {
+  display: grid;
+  gap: 20px;
+}
+
+.admin-help__section {
+  border-top: 1px solid var(--theme-elevation-150);
+  padding-top: 20px;
+}
+
+.admin-help__section h2 {
+  margin-top: 0;
+}
+
+.admin-help__blocks {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.admin-help__block {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.admin-help__block h3 {
+  margin-top: 0;
+}
+
+.admin-help__block dl {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.admin-help__block dt {
+  font-weight: 600;
+}
+
+.admin-help__block dd {
+  margin: 4px 0 0;
+}

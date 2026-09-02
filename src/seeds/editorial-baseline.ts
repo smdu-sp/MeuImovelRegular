@@ -49,6 +49,7 @@ const existingSeedPages = await payload.find({
 });
 
 const baseSeedPageData = {
+  lifecycleStatus: "active" as const,
   title: "Seed — catálogo completo de Blocks",
   slug: "seed",
   seo: {

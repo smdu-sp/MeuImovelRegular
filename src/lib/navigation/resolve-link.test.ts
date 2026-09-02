@@ -6,6 +6,7 @@ import { resolveLink, resolveLinkHref } from "./resolve-link";
 
 const page = {
   id: 1,
+  lifecycleStatus: "active",
   title: "Entenda a lei",
   slug: "entenda-a-lei",
   createdAt: "2026-01-01T00:00:00.000Z",

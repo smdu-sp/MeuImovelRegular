@@ -19,10 +19,24 @@ const payloadSecret =
   process.env.PAYLOAD_SECRET || "dev-only-payload-secret-change-me";
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 
+export const adminHelpView = {
+  Component: "/components/admin/AdminHelpPage#AdminHelpPage",
+  path: "/ajuda",
+} as const;
+
+export const adminHelpNavLink =
+  "/components/admin/AdminHelpNavLink#AdminHelpNavLink";
+
 export default buildConfig({
   editor: lexicalEditor(),
   admin: {
     user: Users.slug,
+    components: {
+      afterNavLinks: [adminHelpNavLink],
+      views: {
+        ajuda: adminHelpView,
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
       importMapFile: path.resolve(

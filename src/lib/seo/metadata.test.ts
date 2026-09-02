@@ -6,6 +6,7 @@ import { generatePageMetadata, generateSiteMetadata } from "./metadata";
 
 const basePage = {
   id: 1,
+  lifecycleStatus: "active",
   title: "Titulo da pagina",
   slug: "pagina",
   createdAt: "2026-01-01T00:00:00.000Z",
