@@ -13,6 +13,7 @@ docs/specs/
   02-domain/
   03-design-system/
   04-cms-foundation-ii/
+  05-cms-maturity-governance/
 ```
 
 ## 00 Project
@@ -80,8 +81,28 @@ Segundo ciclo da base CMS: auditoria, expansao controlada, navegacao, media, SEO
 | SPEC-028 | [spec-028-schema-evolution-migrations.md](./04-cms-foundation-ii/spec-028-schema-evolution-migrations.md) | Evolucao de schema e migrations. |
 | SPEC-029 | [spec-029-cms-foundation-validation.md](./04-cms-foundation-ii/spec-029-cms-foundation-validation.md) | Validacao final da base CMS. |
 
+## 05 CMS Maturity & Governance
+
+Maturidade editorial e governanca do CMS: publicacao, identidade visual, experiencia do Admin, controles de midia, permissoes, logs, ciclo de vida e documentacao de uso.
+
+| Spec | Arquivo | Tema |
+|---|---|---|
+| SPEC-030 | [spec-030-unpublish-workflow-bugfix.md](./05-cms-maturity-governance/spec-030-unpublish-workflow-bugfix.md) | Correcao do fluxo de Unpublish antes de novas regras de lifecycle. |
+| SPEC-031 | [spec-031-smul-visual-identity.md](./05-cms-maturity-governance/spec-031-smul-visual-identity.md) | Identidade visual SMUL mapeada para tokens do Design System. |
+| SPEC-032 | [spec-032-admin-localization-block-catalog.md](./05-cms-maturity-governance/spec-032-admin-localization-block-catalog.md) | Localizacao do Admin e catalogo visual dos Blocks. |
+| SPEC-033 | [spec-033-hero-background-media.md](./05-cms-maturity-governance/spec-033-hero-background-media.md) | Suporte formal a imagem de fundo no Hero. |
+| SPEC-034 | [spec-034-image-presentation-controls.md](./05-cms-maturity-governance/spec-034-image-presentation-controls.md) | Controles editoriais fechados para apresentacao de imagens. |
+| SPEC-035 | [spec-035-standard-icon-system.md](./05-cms-maturity-governance/spec-035-standard-icon-system.md) | Catalogo central e controlado de icones padrao. |
+| SPEC-036 | [spec-036-controlled-block-styling.md](./05-cms-maturity-governance/spec-036-controlled-block-styling.md) | Aparencia controlada dos Blocks sem CSS arbitrario. |
+| SPEC-037 | [spec-037-roles-permissions-validation.md](./05-cms-maturity-governance/spec-037-roles-permissions-validation.md) | Validacao e formalizacao de papeis e permissoes. |
+| SPEC-038 | [spec-038-content-audit-logs.md](./05-cms-maturity-governance/spec-038-content-audit-logs.md) | Logs de auditoria para eventos editoriais. |
+| SPEC-039 | [spec-039-soft-delete-content-deactivation.md](./05-cms-maturity-governance/spec-039-soft-delete-content-deactivation.md) | Desativacao de conteudo no lugar de hard delete editorial. |
+| SPEC-040 | [spec-040-admin-user-documentation.md](./05-cms-maturity-governance/spec-040-admin-user-documentation.md) | Documentacao de uso acessivel pelo Admin. |
+| SPEC-041 | [spec-041-image-editing-canvas.md](./05-cms-maturity-governance/spec-041-image-editing-canvas.md) | Backlog opcional para canvas de edicao de imagens. |
+
 ## Convencoes
 
+- Use [modelo-de-spec.md](./modelo-de-spec.md) como base para novas specs.
 - Use o numero da spec para preservar a ordem historica.
 - Mantenha nomes de arquivo em lowercase kebab-case ASCII.
 - Ao adicionar uma spec, coloque-a na pasta de dominio correspondente e atualize este indice.
